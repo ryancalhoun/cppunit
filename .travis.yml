@@ -1,23 +1,19 @@
 os:
-  - linux
-  - osx
-
+- linux
+- osx
 language: cpp
-
 compiler:
-  - clang
-  - gcc
-
+- clang
+- gcc
 script:
-  - cmake .
-  - make install
-  - ./package.sh
-
+- cmake .
+- make install
+- "./package.sh"
 deploy:
   provider: releases
-  api-key: "GITHUB OAUTH TOKEN"
-  file:  "dist/cppunit*.tgz"
+  api-key:
+    secure: i2+QDlQ90/WOpG9N2q/VIwiKRzPsjb5cUqY7IbAPPVNPXEH1AgCE136QQlKMzIr8B/QIN53rObuRLD5jqWUqjrgpgIodo1gZUhbzhLiMyxKJQmI3VaEHeUeBT4SL58Jn15QMfOZkIzlSp2xaPRD4+1AW3VRuQEf93PEe7Aqc7OtvdZjeBm3mQKmQ1UYZesBq+WeGU297BFN/ejibMllAbr3UozTCXmBJX0q/T8FKAOEDScvHfWLNVZU/PA9myvCuinT03V8FdWPE7dInhuMzPBOqxKlYyUbpHbTl36fFNvoGwwrkgCxCuCxxyN3daEffpz4KfF5gimL4GoLGG0fIBiJ1zGKe98oUkfbbFdmWXlQE1k59e6VL10wWo9tiZWhf1E5C0zfUKnV6L1lLpxbPj/rm3Y6Aneciox0pxVfjXruE83Aeg90InMr/UHBZRjPyOTHjiM2o5crjR1+xM2LuUDEwSShWv2PvZoIQl9GtDPCxW/YHPodlWfygvNcVJvAooHDnT2mnDjiC4+5VRN/BnPbFrWUNo2dAeqESbMc/iKjEtBkBICDxi29PFFWD/4RXtkbFlMg6q2PApRCATrMU1aB8fqryrQVp+oBvMg2jQjxhxx0O8aNSns1cuIwTd+Iq+l0ny1TNa5XbGl+i4nCzT93W+mJ/kzgkLcK6Mss9DXg=
+  file: dist/cppunit*.tgz
   skip_cleanup: true
   on:
     tags: true
-
