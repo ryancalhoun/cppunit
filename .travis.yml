@@ -15,7 +15,7 @@ script:
 
 deploy:
   provider: releases
-  api-key: "ca18b86206d6b30c7aacb5c26ff6ce6fb1b91367"
+  api-key: "GITHUB OAUTH TOKEN"
   file:  "dist/cppunit*.tgz"
   skip_cleanup: true
   on:
