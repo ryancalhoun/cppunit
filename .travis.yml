@@ -10,4 +10,14 @@ compiler:
 
 script:
   - cmake .
-  - make
+  - make install
+  - ./package.sh
+
+deploy:
+  provider: releases
+  api-key: "ca18b86206d6b30c7aacb5c26ff6ce6fb1b91367"
+  file:  "dist/cppunit*.tgz"
+  skip_cleanup: true
+  on:
+    tags: true
+
