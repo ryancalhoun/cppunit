@@ -119,47 +119,6 @@
 #define CPPUNIT_HAVE_UNISTD_H  1 
 #endif
 
-/* Define to the sub-directory in which libtool stores uninstalled libraries.
-   */
-#ifndef CPPUNIT_LT_OBJDIR 
-#define CPPUNIT_LT_OBJDIR  ".libs/" 
-#endif
-
-/* Name of package */
-#ifndef CPPUNIT_PACKAGE 
-#define CPPUNIT_PACKAGE  "cppunit" 
-#endif
-
-/* Define to the address where bug reports for this package should be sent. */
-#ifndef CPPUNIT_PACKAGE_BUGREPORT 
-#define CPPUNIT_PACKAGE_BUGREPORT  "" 
-#endif
-
-/* Define to the full name of this package. */
-#ifndef CPPUNIT_PACKAGE_NAME 
-#define CPPUNIT_PACKAGE_NAME  "cppunit" 
-#endif
-
-/* Define to the full name and version of this package. */
-#ifndef CPPUNIT_PACKAGE_STRING 
-#define CPPUNIT_PACKAGE_STRING  "cppunit 1.13.1" 
-#endif
-
-/* Define to the one symbol short name of this package. */
-#ifndef CPPUNIT_PACKAGE_TARNAME 
-#define CPPUNIT_PACKAGE_TARNAME  "cppunit" 
-#endif
-
-/* Define to the home page for this package. */
-#ifndef CPPUNIT_PACKAGE_URL 
-#define CPPUNIT_PACKAGE_URL  "" 
-#endif
-
-/* Define to the version of this package. */
-#ifndef CPPUNIT_PACKAGE_VERSION 
-#define CPPUNIT_PACKAGE_VERSION  "1.13.1" 
-#endif
-
 /* Define to 1 if you have the ANSI C header files. */
 #ifndef CPPUNIT_STDC_HEADERS 
 #define CPPUNIT_STDC_HEADERS  1 
@@ -170,10 +129,5 @@
 #define CPPUNIT_USE_TYPEINFO_NAME  CPPUNIT_HAVE_RTTI 
 #endif
 
-/* Version number of package */
-#ifndef CPPUNIT_VERSION 
-#define CPPUNIT_VERSION  "1.13.1" 
-#endif
- 
 /* _INCLUDE_CPPUNIT_CONFIG_AUTO_H */
 #endif
