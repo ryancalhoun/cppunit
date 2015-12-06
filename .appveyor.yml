@@ -1,8 +1,8 @@
 platform:
   - x64
 configuration:
+  - RelWithDebInfo
   - Debug
-  - Release
 build_script:
   - rake cmake
   - rake build
