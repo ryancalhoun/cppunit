@@ -8,7 +8,7 @@ end
 
 task :package do
   chdir('dist') do
-    exit $?.exitstatus unless system '7z a cppunit-%PLATFORM%-%CONFIGURATION%.zip'.downcase
+    exit $?.exitstatus unless system '7z a cppunit-win-%PLATFORM%-%CONFIGURATION%.zip'
   end
 end
 
