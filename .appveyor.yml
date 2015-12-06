@@ -10,3 +10,12 @@ after_build:
   - rake package
 artifacts:
   - path: 'dist\cppunit*zip'
+deploy:
+  provider: GitHub
+  auth_token:
+    secure: QsR9jNzYFT5kWsoiDfG+aON57mym2XlmSNaoFu8CnzPzU6l7ReBbLy6htNY640CK
+  draft: false
+  prerelease: false
+  on:
+    branch: master
+    appveyor_repo_tag: true
