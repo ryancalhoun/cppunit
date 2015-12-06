@@ -6,9 +6,7 @@ compiler:
 - clang
 - gcc
 script:
-- cmake .
-- make install
-- "./package.sh"
+- rake
 deploy:
   provider: releases
   api-key:
