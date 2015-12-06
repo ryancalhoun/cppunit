@@ -3,7 +3,7 @@ task :cmake do
 end
 
 task :build do
-  exit $?.exitstatus unless system 'msbuild /m:4 /p:Platform=%PLATFORM% /p:Config=%CONFIGURATION% cppunit.sln'
+  exit $?.exitstatus unless system 'cmake --build . --target install --config %CONFIGURATION'
 end
 
 task :package do
