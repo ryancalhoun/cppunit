@@ -3,7 +3,7 @@ task :cmake do
 end
 
 task :build do
-  exit $?.exitstatus unless system 'cmake --build . --target install --config %CONFIGURATION'
+  exit $?.exitstatus unless system 'cmake --build . --target install --config %CONFIGURATION%'
 end
 
 task :package do
