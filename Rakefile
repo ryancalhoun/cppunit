@@ -1,7 +1,7 @@
 task :cmake do
-  system "cmake -G 'Vistual Studio 14 Win64"
+  exit $?.exitstatus unless system "cmake -G 'Visual Studio 14 Win64'"
 end
 
 task :build do
-  system "msbuild /m:4 /p:Platform=%PLATFORM% /p:Config=%CONFIGURATION% cppunit.sln"
+  exit $?.exitstatus unless system "msbuild /m:4 /p:Platform=%PLATFORM% /p:Config=%CONFIGURATION% cppunit.sln"
 end
