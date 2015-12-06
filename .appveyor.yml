@@ -1,0 +1,11 @@
+environment:
+  matix:
+    - GENERATOR: "Visual Studio 14"
+      CONFIG: Debug
+    - GENERATOR: "Visual Studio 14"
+      CONFIG: Release
+
+build_script:
+  - ruby --version
+  - rake --version
+  - cmake --version
