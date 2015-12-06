@@ -2,3 +2,4 @@ build_script:
   - ruby --version
   - rake --version
   - cmake --version
+  - msbuild /version
