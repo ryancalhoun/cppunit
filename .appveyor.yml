@@ -1,0 +1,12 @@
+platform:
+  - x64
+configuration:
+  - Debug
+  - Release
+build_script:
+  - rake cmake
+  - rake build
+after_build:
+  - rake package
+artifacts:
+  - path: 'dist\cppunit*zip'
