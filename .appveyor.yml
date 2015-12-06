@@ -1,5 +1,8 @@
+platform:
+  - x64
+configuration:
+  - Debug
+  - Release
 build_script:
-  - ruby --version
-  - rake --version
-  - cmake --version
-  - msbuild /version
+  - cmake -G "Visual Studio 14" -DCMAKE_BUILD_TYPE=%CONFIGURATION%
+  - msbuild /m:4 /p:Config=%CONFIGURATION% cppunit.sln
