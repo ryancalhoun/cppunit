@@ -1,3 +1,5 @@
+puts RUBY_PLATFORM
+
 if RUBY_PLATFORM =~ /win/
   def sh(cmd)
     exit $?.exitstatus unless system cmd
