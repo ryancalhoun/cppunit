@@ -7,5 +7,6 @@ include_directories(
 )
 
 add_subdirectory(src/cppunit build/src/cppunit)
+add_subdirectory(test build/test)
 
 install(DIRECTORY include/ DESTINATION ${CMAKE_SOURCE_DIR}/dist/cppunit/include)

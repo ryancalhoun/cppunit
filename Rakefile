@@ -1,3 +1,5 @@
+require 'rake/testtask'
+
 if RUBY_PLATFORM =~ /mswin|mingw/
   def sh(cmd)
     exit $?.exitstatus unless system cmd
@@ -30,4 +32,8 @@ task :package do
   end
 end
 
-task :default => [:cmake, :build, :package]
+Rake::TestTask.new {|t|
+  t.test_files = FileList['test/**/*est.rb']
+}
+
+task :default => [:cmake, :build, :test, :package]

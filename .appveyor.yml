@@ -7,6 +7,7 @@ build_script:
   - rake cmake
   - rake build
 after_build:
+  - rake test
   - rake package
 artifacts:
   - path: 'dist\cppunit*zip'
