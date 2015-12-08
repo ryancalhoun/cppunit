@@ -632,19 +632,12 @@ void assertGreaterEqual( const T& expected,
    CPPUNIT_ASSERT_NO_THROW_MESSAGE( message, assertion )
 
 
-
-
-// Backwards compatibility
-
-#if CPPUNIT_ENABLE_NAKED_ASSERT
-
-#undef assert
-#define assert(c)                 CPPUNIT_ASSERT(c)
-#define assertEqual(e,a)          CPPUNIT_ASSERT_EQUAL(e,a)
-#define assertDoublesEqual(e,a,d) CPPUNIT_ASSERT_DOUBLES_EQUAL(e,a,d)
-#define assertLongsEqual(e,a)     CPPUNIT_ASSERT_EQUAL(e,a)
-
-#endif
+/*
+ *  Assert without shouting.
+ */
+#define assert_true(cond) CPPUNIT_ASSERT(cond)
+#define assert_false(cond) CPPUNIT_ASSERT(! (cond))
+#define assert_equal(expected, actual) CPPUNIT_ASSERT_EQUAL(expected, actual)
 
 
 CPPUNIT_NS_END

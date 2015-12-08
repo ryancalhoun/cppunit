@@ -7,11 +7,13 @@ class FooTest : public CppUnit::TestFixture
 public:
 	void testOk()
 	{
-		CPPUNIT_ASSERT(true);
+		assert_true(true);
+		assert_false(false);
+		assert_equal(4, 4);
 	}
 	void testFail()
 	{
-		CPPUNIT_ASSERT(false);
+		assert_true(false);
 	}
 
 	static CppUnit::Test* suite()
