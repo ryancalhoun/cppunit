@@ -13,6 +13,26 @@ void assertEquals(int expected, unsigned long long actual, SourceLine sourceLine
 	assertEquals<int>(expected, (int)actual, sourceLine, message);
 }
 
+void assertLess(int expected, unsigned long long actual, SourceLine sourceLine, const std::string& message)
+{
+	assertLess<int>(expected, (int)actual, sourceLine, message);
+}
+
+void assertLessEqual(int expected, unsigned long long actual, SourceLine sourceLine, const std::string& message)
+{
+	assertLess<int>(expected, (int)actual, sourceLine, message);
+}
+
+void assertGreater(int expected, unsigned long long actual, SourceLine sourceLine, const std::string& message)
+{
+	assertGreater<int>(expected, (int)actual, sourceLine, message);
+}
+
+void assertGreaterEqual(int expected, unsigned long long actual, SourceLine sourceLine, const std::string& message)
+{
+	assertGreater<int>(expected, (int)actual, sourceLine, message);
+}
+
 void 
 assertDoubleEquals(double expected,
                    double actual,

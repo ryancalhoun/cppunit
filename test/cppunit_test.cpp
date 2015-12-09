@@ -31,6 +31,16 @@ public:
 		assert_equal(42, xs);
 		assert_equal(42ll, xs);
 		assert_equal(42ull, xs);
+
+		assert_less(16, 8u);
+		assert_less_equal(16u, 8);
+		assert_greater(4, 8u);
+		assert_greater_equal(4u, 8);
+	}
+
+	void testDoubles()
+	{
+		assert_doubles_equal(42.0, 42.0, 0.001);
 	}
 
 	static CppUnit::Test* suite()
@@ -41,6 +51,7 @@ public:
 		CPPUNIT_ADD_TEST(suite, testFail);
 		CPPUNIT_ADD_TEST(suite, testStrings);
 		CPPUNIT_ADD_TEST(suite, testIntegers);
+		CPPUNIT_ADD_TEST(suite, testDoubles);
 
 		return suite;
 	}

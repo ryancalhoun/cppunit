@@ -185,6 +185,8 @@ void assertLess(const T& expected,
 	}
 }
 
+void assertLess(int expected, unsigned long long actual, SourceLine sourceLine, const std::string& message);
+
 
 /*! \brief (Implementation) Asserts that an object is less than another one of the same type
  * Use CPPUNIT_ASSERT_LESS, CPPUNIT_ASSERT_GREATER instead of this function.
@@ -205,6 +207,8 @@ void assertGreater(const T& expected,
 	}
 }
 
+void assertGreater(int expected, unsigned long long actual, SourceLine sourceLine, const std::string& message);
+
 /*! \brief (Implementation) Asserts that two objects of the same type are equals.
  * Use CPPUNIT_ASSERT_LESSEQUAL, CPPUNIT_ASSERT_GREATEREQUAL instead of this function.
  * \sa assertion_traits, Asserter::failNotLessEqual().
@@ -224,6 +228,8 @@ void assertLessEqual(const T& expected,
 	}
 }
 
+void assertLessEqual(int expected, unsigned long long actual, SourceLine sourceLine, const std::string& message);
+
 /*! \brief (Implementation) Asserts that two objects of the same type are equals.
  * Use CPPUNIT_ASSERT_LESSEQUAL, CPPUNIT_ASSERT_GREATEREQUAL instead of this function.
  * \sa assertion_traits, Asserter::failNotLessEqual().
@@ -242,6 +248,10 @@ void assertGreaterEqual(const T& expected,
 		                              message);
 	}
 }
+
+void assertGreaterEqual(int expected, unsigned long long actual, SourceLine sourceLine, const std::string& message);
+
+
 /* A set of macros which allow us to get the line number
  * and file name at the point of an error.
  * Just goes to show that preprocessors do have some
@@ -641,6 +651,11 @@ void assertGreaterEqual(const T& expected,
 #define assert_true(cond) CPPUNIT_ASSERT(cond)
 #define assert_false(cond) CPPUNIT_ASSERT(! (cond))
 #define assert_equal(expected, actual) CPPUNIT_ASSERT_EQUAL(expected, actual)
+#define assert_less(expected, actual) CPPUNIT_ASSERT_LESS(expected, actual)
+#define assert_less_equal(expected, actual) CPPUNIT_ASSERT_LESSEQUAL(expected, actual)
+#define assert_greater(expected, actual) CPPUNIT_ASSERT_GREATER(expected, actual)
+#define assert_greater_equal(expected, actual) CPPUNIT_ASSERT_GREATEREQUAL(expected, actual)
+#define assert_doubles_equal(expected, actual, tolerance) CPPUNIT_ASSERT_DOUBLES_EQUAL(expected, actual, tolerance)
 
 
 CPPUNIT_NS_END
