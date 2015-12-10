@@ -251,35 +251,11 @@ void assertGreaterEqual(const T& expected,
 
 void assertGreaterEqual(int expected, unsigned long long actual, SourceLine sourceLine, const std::string& message);
 
-
-/* A set of macros which allow us to get the line number
- * and file name at the point of an error.
- * Just goes to show that preprocessors do have some
- * redeeming qualities.
- */
-#if CPPUNIT_HAVE_CPP_SOURCE_ANNOTATION
-/** Assertions that a condition is \c true.
- * \ingroup Assertions
- */
 #define CPPUNIT_ASSERT(condition)                                                 \
   (CPPUNIT_NS::Asserter::failIf(!(condition),                                   \
                                  CPPUNIT_NS::Message("assertion failed",         \
                                                       "Expression: " #condition), \
                                  CPPUNIT_SOURCELINE()))
-#else
-#define CPPUNIT_ASSERT(condition)                                            \
-  (CPPUNIT_NS::Asserter::failIf(!(condition),                              \
-                                  CPPUNIT_NS::Message("assertion failed"), \
-                                  CPPUNIT_SOURCELINE()))
-#endif
-
-/** Assertion with a user specified message.
- * \ingroup Assertions
- * \param message Message reported in diagnostic if \a condition evaluates
- *                to \c false.
- * \param condition If this condition evaluates to \c false then the
- *                  test failed.
- */
 #define CPPUNIT_ASSERT_MESSAGE(message,condition)                          \
   (CPPUNIT_NS::Asserter::failIf(!(condition),                            \
                                   CPPUNIT_NS::Message("assertion failed", \
@@ -287,183 +263,46 @@ void assertGreaterEqual(int expected, unsigned long long actual, SourceLine sour
                                                        #condition,         \
                                                        message),          \
                                   CPPUNIT_SOURCELINE()))
-
-/** Fails with the specified message.
- * \ingroup Assertions
- * \param message Message reported in diagnostic.
- */
 #define CPPUNIT_FAIL(message)                                         \
   (CPPUNIT_NS::Asserter::fail(CPPUNIT_NS::Message("forced failure",  \
                                                      message),         \
                                 CPPUNIT_SOURCELINE()))
 
-#ifdef CPPUNIT_ENABLE_SOURCELINE_DEPRECATED
-/// Generalized macro for primitive value comparisons
-#define CPPUNIT_ASSERT_EQUAL(expected,actual)                     \
-  (CPPUNIT_NS::assertEquals((expected),             \
-                              (actual),               \
-                              __LINE__, __FILE__))
-#else
-/** Asserts that two values are equals.
- * \ingroup Assertions
- *
- * Equality and string representation can be defined with
- * an appropriate CppUnit::assertion_traits class.
- *
- * A diagnostic is printed if actual and expected values disagree.
- *
- * Requirement for \a expected and \a actual parameters:
- * - They are exactly of the same type
- * - They are serializable into a std::strstream using operator <<.
- * - They can be compared using operator ==. 
- *
- * The last two requirements (serialization and comparison) can be
- * removed by specializing the CppUnit::assertion_traits.
- */
 #define CPPUNIT_ASSERT_EQUAL(expected,actual)          \
   (CPPUNIT_NS::assertEquals((expected),              \
                               (actual),                \
                               CPPUNIT_SOURCELINE(),    \
                               ""))
 
-/** Asserts that two values are equals, provides additional message on failure.
- * \ingroup Assertions
- *
- * Equality and string representation can be defined with
- * an appropriate assertion_traits class.
- *
- * A diagnostic is printed if actual and expected values disagree.
- * The message is printed in addition to the expected and actual value
- * to provide additional information.
- *
- * Requirement for \a expected and \a actual parameters:
- * - They are exactly of the same type
- * - They are serializable into a std::strstream using operator <<.
- * - They can be compared using operator ==. 
- *
- * The last two requirements (serialization and comparison) can be
- * removed by specializing the CppUnit::assertion_traits.
- */
 #define CPPUNIT_ASSERT_EQUAL_MESSAGE(message,expected,actual)      \
   (CPPUNIT_NS::assertEquals((expected),              \
                               (actual),                \
                               CPPUNIT_SOURCELINE(),    \
                               (message)))
-#endif
 
-/** Asserts that actual is less than expected, provides additional message on failure.
- * \ingroup Assertions
- *
- * Less and string representation can be defined with
- * an appropriate assertion_traits class.
- *
- * A diagnostic is printed if actual is less than expected.
- * The message is printed in addition to the expected and actual value
- * to provide additional information.
- *
- * Requirement for \a expected and \a actual parameters:
- * - They are exactly of the same type
- * - They are serializable into a std::strstream using operator <<.
- * - They can be compared using operator <. 
- *
- * The last two requirements (serialization and comparison) can be
- * removed by specializing the CppUnit::assertion_traits.
- *
- * \sa CPPUNIT_ASSERT_GREATER
- */
 #define CPPUNIT_ASSERT_LESS(expected, actual)          \
     (CPPUNIT_NS::assertLess((expected),              \
                               (actual),                \
                               CPPUNIT_SOURCELINE(),    \
                               ""))
 
-/** Asserts that actual is greater than expected, provides additional message on failure.
- * \ingroup Assertions
- *
- * String representation can be defined with
- * an appropriate assertion_traits class. For comparison assertLess is used.
- *
- * A diagnostic is printed if actual is less than expected.
- * The message is printed in addition to the expected and actual value
- * to provide additional information.
- *
- * Requirement for \a expected and \a actual parameters:
- * - They are exactly of the same type
- * - They are serializable into a std::strstream using operator <<.
- * - They can be compared using operator<. 
- *
- * The last two requirements (serialization and comparison) can be
- * removed by specializing the CppUnit::assertion_traits.
- *
- * \sa CPPUNIT_ASSERT_LESS
- */
 #define CPPUNIT_ASSERT_GREATER(expected, actual)       \
     (CPPUNIT_NS::assertGreater((expected),           \
                                  (actual),             \
                                  CPPUNIT_SOURCELINE(), \
                                  ""))
 
-/** Asserts that actual is less or equal than expected, provides additional message on failure.
- * \ingroup Assertions
- *
- * LessEqual and string representation can be defined with
- * an appropriate assertion_traits class.
- *
- * A diagnostic is printed if actual is greater than expected.
- * The message is printed in addition to the expected and actual value
- * to provide additional information.
- *
- * Requirement for \a expected and \a actual parameters:
- * - They are exactly of the same type
- * - They are serializable into a std::strstream using operator <<.
- * - They can be compared using operator <=. 
- *
- * The last two requirements (serialization and comparison) can be
- * removed by specializing the CppUnit::assertion_traits.
- *
- * \sa CPPUNIT_ASSERT_GREATEREQUAL
- */
 #define CPPUNIT_ASSERT_LESSEQUAL(expected, actual)               \
     (CPPUNIT_NS::assertLessEqual((expected),              \
                                    (actual),                \
                                    CPPUNIT_SOURCELINE(),    \
                                    ""))
 
-/** Asserts that actual is greater than expected, provides additional message on failure.
- * \ingroup Assertions
- *
- * String representation can be defined with
- * an appropriate assertion_traits class. For comparison assertLess is used.
- *
- * A diagnostic is printed if actual is less than expected.
- * The message is printed in addition to the expected and actual value
- * to provide additional information.
- *
- * Requirement for \a expected and \a actual parameters:
- * - They are exactly of the same type
- * - They are serializable into a std::strstream using operator <<.
- * - They can be compared using operator<=. 
- *
- * The last two requirements (serialization and comparison) can be
- * removed by specializing the CppUnit::assertion_traits.
- *
- * \sa CPPUNIT_ASSERT_LESSEQUAL
- */
 #define CPPUNIT_ASSERT_GREATEREQUAL(expected, actual)            \
     (CPPUNIT_NS::assertGreaterEqual((expected),                \
                                       (actual),              \
                                       CPPUNIT_SOURCELINE(),    \
                                       ""))
-/*! \brief Macro for primitive double value comparisons. 
- * \ingroup Assertions
- *
- * The assertion pass if both expected and actual are finite and
- * \c fabs(\c expected - \c actual) <= \c delta.
- * If either \c expected or actual are infinite (+/- inf), the 
- * assertion pass if \c expected == \c actual.
- * If either \c expected or \c actual is a NaN (not a number), then
- * the assertion fails.
- */
 #define CPPUNIT_ASSERT_DOUBLES_EQUAL(expected,actual,delta)        \
   (CPPUNIT_NS::assertDoubleEquals((expected),            \
                                     (actual),              \
@@ -471,12 +310,6 @@ void assertGreaterEqual(int expected, unsigned long long actual, SourceLine sour
                                     CPPUNIT_SOURCELINE(),  \
                                     ""))
 
-
-/*! \brief Macro for primitive double value comparisons, setting a 
- * user-supplied message in case of failure. 
- * \ingroup Assertions
- * \sa CPPUNIT_ASSERT_DOUBLES_EQUAL for detailed semantic of the assertion.
- */
 #define CPPUNIT_ASSERT_DOUBLES_EQUAL_MESSAGE(message,expected,actual,delta)  \
   (CPPUNIT_NS::assertDoubleEquals((expected),            \
                                     (actual),              \
@@ -484,42 +317,22 @@ void assertGreaterEqual(int expected, unsigned long long actual, SourceLine sour
                                     CPPUNIT_SOURCELINE(),  \
                                     (message)))
 
-
-/** Asserts that the given expression throws an exception of the specified type. 
- * \ingroup Assertions
- * Example of usage:
- * \code
- *   std::vector<int> v;
- *  CPPUNIT_ASSERT_THROW(v.at(50), std::out_of_range);
- * \endcode
- */
 # define CPPUNIT_ASSERT_THROW(expression, ExceptionType)              \
    CPPUNIT_ASSERT_THROW_MESSAGE(CPPUNIT_NS::AdditionalMessage(),       \
                                  expression,                            \
                                  ExceptionType)
 
 
-// implementation detail
 #if CPPUNIT_USE_TYPEINFO_NAME
 #define CPPUNIT_EXTRACT_EXCEPTION_TYPE_(exception, no_rtti_message) \
    CPPUNIT_NS::TypeInfoHelper::getClassName(typeid(exception))
 #else
 #define CPPUNIT_EXTRACT_EXCEPTION_TYPE_(exception, no_rtti_message) \
    std::string(no_rtti_message)
-#endif // CPPUNIT_USE_TYPEINFO_NAME
+#endif
 
-// implementation detail
 #define CPPUNIT_GET_PARAMETER_STRING(parameter) #parameter
 
-/** Asserts that the given expression throws an exception of the specified type, 
- * setting a user supplied message in case of failure. 
- * \ingroup Assertions
- * Example of usage:
- * \code
- *   std::vector<int> v;
- *  CPPUNIT_ASSERT_THROW_MESSAGE("- std::vector<int> v;", v.at(50), std::out_of_range);
- * \endcode
- */
 # define CPPUNIT_ASSERT_THROW_MESSAGE(message, expression, ExceptionType)   \
    do {                                                                       \
       bool cpputCorrectExceptionThrown_ = false;                              \
@@ -549,30 +362,11 @@ void assertGreaterEqual(int expected, unsigned long long actual, SourceLine sour
    } while (false)
 
 
-/** Asserts that the given expression does not throw any exceptions.
- * \ingroup Assertions
- * Example of usage:
- * \code
- *   std::vector<int> v;
- *   v.push_back(10);
- *  CPPUNIT_ASSERT_NO_THROW(v.at(0));
- * \endcode
- */
 # define CPPUNIT_ASSERT_NO_THROW(expression)                             \
    CPPUNIT_ASSERT_NO_THROW_MESSAGE(CPPUNIT_NS::AdditionalMessage(),       \
                                     expression)
 
 
-/** Asserts that the given expression does not throw any exceptions, 
- * setting a user supplied message in case of failure. 
- * \ingroup Assertions
- * Example of usage:
- * \code
- *   std::vector<int> v;
- *   v.push_back(10);
- *  CPPUNIT_ASSERT_NO_THROW("std::vector<int> v;", v.at(0));
- * \endcode
- */
 # define CPPUNIT_ASSERT_NO_THROW_MESSAGE(message, expression)               \
    do {                                                                       \
       CPPUNIT_NS::Message cpputMsg_("unexpected exception caught");         \
@@ -595,60 +389,21 @@ void assertGreaterEqual(int expected, unsigned long long actual, SourceLine sour
    } while (false)
 
 
-/** Asserts that an assertion fail.
- * \ingroup Assertions
- * Use to test assertions.
- * Example of usage:
- * \code
- *   CPPUNIT_ASSERT_ASSERTION_FAIL(CPPUNIT_ASSERT(1 == 2));
- * \endcode
- */
 # define CPPUNIT_ASSERT_ASSERTION_FAIL(assertion)                 \
    CPPUNIT_ASSERT_THROW(assertion, CPPUNIT_NS::Exception)
 
-
-/** Asserts that an assertion fail, with a user-supplied message in 
- * case of error.
- * \ingroup Assertions
- * Use to test assertions.
- * Example of usage:
- * \code
- *   CPPUNIT_ASSERT_ASSERTION_FAIL_MESSAGE("1 == 2", CPPUNIT_ASSERT(1 == 2));
- * \endcode
- */
 # define CPPUNIT_ASSERT_ASSERTION_FAIL_MESSAGE(message, assertion)    \
    CPPUNIT_ASSERT_THROW_MESSAGE(message, assertion, CPPUNIT_NS::Exception)
 
-
-/** Asserts that an assertion pass.
- * \ingroup Assertions
- * Use to test assertions.
- * Example of usage:
- * \code
- *   CPPUNIT_ASSERT_ASSERTION_PASS(CPPUNIT_ASSERT(1 == 1));
- * \endcode
- */
 # define CPPUNIT_ASSERT_ASSERTION_PASS(assertion)                 \
    CPPUNIT_ASSERT_NO_THROW(assertion)
 
-
-/** Asserts that an assertion pass, with a user-supplied message in 
- * case of failure. 
- * \ingroup Assertions
- * Use to test assertions.
- * Example of usage:
- * \code
- *   CPPUNIT_ASSERT_ASSERTION_PASS_MESSAGE("1 != 1", CPPUNIT_ASSERT(1 == 1));
- * \endcode
- */
 # define CPPUNIT_ASSERT_ASSERTION_PASS_MESSAGE(message, assertion)    \
    CPPUNIT_ASSERT_NO_THROW_MESSAGE(message, assertion)
 
+#define CPPUNIT_VA_SELECT(_2, _1, NAME, ...) NAME
 
-/*
- *  Assert without shouting.
- */
-#define assert_true(cond) CPPUNIT_ASSERT(cond)
+#define assert_true(...) CPPUNIT_VA_SELECT(__VA_ARGS__, CPPUNIT_ASSERT_MESSAGE, CPPUNIT_ASSERT)(__VA_ARGS__)
 #define assert_false(cond) CPPUNIT_ASSERT(! (cond))
 #define assert_equal(expected, actual) CPPUNIT_ASSERT_EQUAL(expected, actual)
 #define assert_less(expected, actual) CPPUNIT_ASSERT_LESS(expected, actual)

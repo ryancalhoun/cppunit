@@ -43,6 +43,11 @@ public:
 		assert_doubles_equal(42.0, 42.0, 0.001);
 	}
 
+	void testMessage()
+	{
+		assert_true("message", true);
+	}
+
 	static CppUnit::Test* suite()
 	{
 		CPPUNIT_DEFINE_SUITE(suite, FooTest);
@@ -52,6 +57,8 @@ public:
 		CPPUNIT_ADD_TEST(suite, testStrings);
 		CPPUNIT_ADD_TEST(suite, testIntegers);
 		CPPUNIT_ADD_TEST(suite, testDoubles);
+
+		CPPUNIT_ADD_TEST(suite, testMessage);
 
 		return suite;
 	}
