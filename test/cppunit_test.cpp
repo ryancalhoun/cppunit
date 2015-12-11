@@ -58,6 +58,12 @@ public:
 		assert_doubles_equal(42.0, 42.0, 0.001);
 	}
 
+	void testThrow()
+	{
+		assert_no_throw(42);
+		assert_throw(int, throw 42);
+	}
+
 	void testMessage()
 	{
 		assert_true(true, "message");
@@ -72,6 +78,9 @@ public:
 		assert_greater_equal(4, 8, "message");
 
 		assert_doubles_equal(4.2, 4.2, 0.1, "message");
+
+		assert_no_throw(42, "message");
+		assert_throw(int, throw 42, "message");
 	}
 
 	static CppUnit::Test* suite()
@@ -83,6 +92,7 @@ public:
 		CPPUNIT_ADD_TEST(suite, testStrings);
 		CPPUNIT_ADD_TEST(suite, testIntegers);
 		CPPUNIT_ADD_TEST(suite, testDoubles);
+		CPPUNIT_ADD_TEST(suite, testThrow);
 
 		CPPUNIT_ADD_TEST(suite, testMessage);
 

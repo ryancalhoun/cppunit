@@ -422,7 +422,6 @@ void assertGreaterEqual(int expected, unsigned long long actual, SourceLine sour
 # define CPPUNIT_ASSERT_ASSERTION_PASS_MESSAGE(message, assertion)    \
    CPPUNIT_ASSERT_NO_THROW_MESSAGE(message, assertion)
 
-#define CPPUNIT_VA_SELECT(_2, _1, NAME, ...) NAME
 
 /*
  * Variadic macros for message/no-message signatures
@@ -455,6 +454,8 @@ void assertGreaterEqual(int expected, unsigned long long actual, SourceLine sour
 
 #define assert_doubles_equal(expected, actual, tolerance, ...) CPPUNIT_ASSERT_BODY(__VA_ARGS__) (CPPUNIT_ASSERT_DOUBLES_EQUAL, __VA_ARGS__, expected, actual, tolerance)
 
+#define assert_throw(expected, expression, ...) CPPUNIT_ASSERT_BODY(__VA_ARGS__) (CPPUNIT_ASSERT_THROW, __VA_ARGS__, expression, expected)
+#define assert_no_throw(expression, ...) CPPUNIT_ASSERT_BODY(__VA_ARGS__) (CPPUNIT_ASSERT_NO_THROW, __VA_ARGS__, expression)
 
 CPPUNIT_NS_END
 
