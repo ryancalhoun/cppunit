@@ -427,16 +427,17 @@ void assertGreaterEqual(int expected, unsigned long long actual, SourceLine sour
 /*
  * Variadic macros for message/no-message signatures
  */
+#define CPPUNIT_REEVAL(exp) exp
 #define CPPUNIT_VA_ARG2(_0, _1, _2, ...) _2
-#define CPPUNIT_SELECT(_0, _1, ...) CPPUNIT_VA_ARG2(__VA_ARGS__, _0, _1)
+#define CPPUNIT_SELECT(_0, _1, ...) CPPUNIT_REEVAL(CPPUNIT_VA_ARG2(__VA_ARGS__, _0, _1))
 
 #define CPPUNIT_VA_EXPAND(...) ,
 
 #define CPPUNIT_TEXT_PASTE(_x1, _x2) _x1 ## _x2
 #define CPPUNIT_TEXT_JOIN(_x1, _x2) CPPUNIT_TEXT_PASTE(_x1, _x2)
 
-#define CPPUNIT_CALL_MESSAGE(fun, msg, ...) CPPUNIT_TEXT_PASTE(fun, _MESSAGE) (msg, __VA_ARGS__)
-#define CPPUNIT_CALL_NOMESSAGE(fun, msg, ...) fun (__VA_ARGS__)
+#define CPPUNIT_CALL_MESSAGE(fun, msg, ...) CPPUNIT_REEVAL(CPPUNIT_TEXT_PASTE(fun, _MESSAGE) (msg, __VA_ARGS__))
+#define CPPUNIT_CALL_NOMESSAGE(fun, msg, ...) CPPUNIT_REEVAL(fun (__VA_ARGS__))
 
 #define CPPUNIT_ASSERT_BODY(...) CPPUNIT_TEXT_JOIN(CPPUNIT_CALL, CPPUNIT_SELECT(_NOMESSAGE, _MESSAGE, CPPUNIT_VA_EXPAND __VA_ARGS__()))
 
