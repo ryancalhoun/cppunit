@@ -285,24 +285,45 @@ void assertGreaterEqual(int expected, unsigned long long actual, SourceLine sour
                               (actual),                \
                               CPPUNIT_SOURCELINE(),    \
                               ""))
+#define CPPUNIT_ASSERT_LESS_MESSAGE(message,expected, actual)          \
+    (CPPUNIT_NS::assertLess((expected),              \
+                              (actual),                \
+                              CPPUNIT_SOURCELINE(),    \
+                              (message)))
 
 #define CPPUNIT_ASSERT_GREATER(expected, actual)       \
     (CPPUNIT_NS::assertGreater((expected),           \
                                  (actual),             \
                                  CPPUNIT_SOURCELINE(), \
                                  ""))
+#define CPPUNIT_ASSERT_GREATER_MESSAGE(message,expected, actual)       \
+    (CPPUNIT_NS::assertGreater((expected),           \
+                                 (actual),             \
+                                 CPPUNIT_SOURCELINE(), \
+                                 (message)))
 
 #define CPPUNIT_ASSERT_LESSEQUAL(expected, actual)               \
     (CPPUNIT_NS::assertLessEqual((expected),              \
                                    (actual),                \
                                    CPPUNIT_SOURCELINE(),    \
                                    ""))
+#define CPPUNIT_ASSERT_LESSEQUAL_MESSAGE(message,expected, actual)               \
+    (CPPUNIT_NS::assertLessEqual((expected),              \
+                                   (actual),                \
+                                   CPPUNIT_SOURCELINE(),    \
+                                   (message)))
 
 #define CPPUNIT_ASSERT_GREATEREQUAL(expected, actual)            \
     (CPPUNIT_NS::assertGreaterEqual((expected),                \
                                       (actual),              \
                                       CPPUNIT_SOURCELINE(),    \
                                       ""))
+#define CPPUNIT_ASSERT_GREATEREQUAL_MESSAGE(message,expected, actual)            \
+    (CPPUNIT_NS::assertGreaterEqual((expected),                \
+                                      (actual),              \
+                                      CPPUNIT_SOURCELINE(),    \
+                                      (message)))
+
 #define CPPUNIT_ASSERT_DOUBLES_EQUAL(expected,actual,delta)        \
   (CPPUNIT_NS::assertDoubleEquals((expected),            \
                                     (actual),              \
@@ -403,14 +424,35 @@ void assertGreaterEqual(int expected, unsigned long long actual, SourceLine sour
 
 #define CPPUNIT_VA_SELECT(_2, _1, NAME, ...) NAME
 
-#define assert_true(...) CPPUNIT_VA_SELECT(__VA_ARGS__, CPPUNIT_ASSERT_MESSAGE, CPPUNIT_ASSERT)(__VA_ARGS__)
-#define assert_false(cond) CPPUNIT_ASSERT(! (cond))
-#define assert_equal(expected, actual) CPPUNIT_ASSERT_EQUAL(expected, actual)
-#define assert_less(expected, actual) CPPUNIT_ASSERT_LESS(expected, actual)
-#define assert_less_equal(expected, actual) CPPUNIT_ASSERT_LESSEQUAL(expected, actual)
-#define assert_greater(expected, actual) CPPUNIT_ASSERT_GREATER(expected, actual)
-#define assert_greater_equal(expected, actual) CPPUNIT_ASSERT_GREATEREQUAL(expected, actual)
-#define assert_doubles_equal(expected, actual, tolerance) CPPUNIT_ASSERT_DOUBLES_EQUAL(expected, actual, tolerance)
+/*
+ * Variadic macros for message/no-message signatures
+ */
+#define CPPUNIT_VA_ARG2(_0, _1, _2, ...) _2
+#define CPPUNIT_SELECT(_0, _1, ...) CPPUNIT_VA_ARG2(__VA_ARGS__, _0, _1)
+
+#define CPPUNIT_VA_EXPAND(...) ,
+
+#define CPPUNIT_TEXT_PASTE(_x1, _x2) _x1 ## _x2
+#define CPPUNIT_TEXT_JOIN(_x1, _x2) CPPUNIT_TEXT_PASTE(_x1, _x2)
+
+#define CPPUNIT_CALL_MESSAGE(fun, msg, ...) CPPUNIT_TEXT_PASTE(fun, _MESSAGE) (msg, __VA_ARGS__)
+#define CPPUNIT_CALL_NOMESSAGE(fun, msg, ...) fun (__VA_ARGS__)
+
+#define CPPUNIT_ASSERT_BODY(...) CPPUNIT_TEXT_JOIN(CPPUNIT_CALL, CPPUNIT_SELECT(_NOMESSAGE, _MESSAGE, CPPUNIT_VA_EXPAND __VA_ARGS__()))
+
+/*
+ * Primary user-facing assert definitions
+ */
+#define assert_true(cond, ...) CPPUNIT_ASSERT_BODY(__VA_ARGS__) (CPPUNIT_ASSERT, __VA_ARGS__, (cond))
+#define assert_false(cond, ...) CPPUNIT_ASSERT_BODY(__VA_ARGS__) (CPPUNIT_ASSERT, __VA_ARGS__, ! (cond))
+
+#define assert_equal(expected, actual, ...) CPPUNIT_ASSERT_BODY(__VA_ARGS__) (CPPUNIT_ASSERT_EQUAL, __VA_ARGS__, expected, actual)
+#define assert_less(expected, actual, ...) CPPUNIT_ASSERT_BODY(__VA_ARGS__) (CPPUNIT_ASSERT_LESS, __VA_ARGS__, expected, actual)
+#define assert_less_equal(expected, actual, ...) CPPUNIT_ASSERT_BODY(__VA_ARGS__) (CPPUNIT_ASSERT_LESSEQUAL, __VA_ARGS__, expected, actual)
+#define assert_greater(expected, actual, ...) CPPUNIT_ASSERT_BODY(__VA_ARGS__) (CPPUNIT_ASSERT_GREATER, __VA_ARGS__, expected, actual)
+#define assert_greater_equal(expected, actual, ...) CPPUNIT_ASSERT_BODY(__VA_ARGS__) (CPPUNIT_ASSERT_GREATEREQUAL, __VA_ARGS__, expected, actual)
+
+#define assert_doubles_equal(expected, actual, tolerance, ...) CPPUNIT_ASSERT_BODY(__VA_ARGS__) (CPPUNIT_ASSERT_DOUBLES_EQUAL, __VA_ARGS__, expected, actual, tolerance)
 
 
 CPPUNIT_NS_END

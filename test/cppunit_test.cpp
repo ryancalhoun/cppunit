@@ -22,10 +22,25 @@ public:
 	}
 	void testIntegers()
 	{
+		int xi = 42;
+		assert_equal(42, xi);
+		assert_equal(42ll, xi);
+		assert_equal(42ull, xi);
+
+		long long xll = 42;
+		assert_equal(42, xll);
+		assert_equal(42ll, xll);
+		assert_equal(42ull, xll);
+
 		unsigned xu = 42;
 		assert_equal(42, xu);
 		assert_equal(42ll, xu);
 		assert_equal(42ull, xu);
+
+		unsigned long long xull = 42;
+		assert_equal(42, xull);
+		assert_equal(42ll, xull);
+		assert_equal(42ull, xull);
 
 		size_t xs = 42;
 		assert_equal(42, xs);
@@ -45,7 +60,18 @@ public:
 
 	void testMessage()
 	{
-		assert_true("message", true);
+		assert_true(true, "message");
+		assert_false(false, "message");
+
+		assert_equal(2, 2, "message");
+
+		assert_less(4, 2, "message");
+		assert_less_equal(4, 2, "message");
+
+		assert_greater(4, 8, "message");
+		assert_greater_equal(4, 8, "message");
+
+		assert_doubles_equal(4.2, 4.2, 0.1, "message");
 	}
 
 	static CppUnit::Test* suite()
