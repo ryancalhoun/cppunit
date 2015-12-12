@@ -25,7 +25,7 @@ int main(int argc, const char* argv[])
   return runner.result().testFailures();
 }
 ```
-## Define each text suite
+## Define each test suite
 ```c++
 #include "cppunit/CppUnit.h"
 
