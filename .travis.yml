@@ -5,6 +5,8 @@ language: cpp
 compiler:
 - clang
 - gcc
+installer:
+- gem install emplace
 script:
 - rake
 deploy:

@@ -3,6 +3,8 @@ platform:
 configuration:
   - RelWithDebInfo
   - Debug
+before_build:
+  - gem install emplace
 build_script:
   - rake cmake
   - rake build
