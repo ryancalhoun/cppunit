@@ -11,12 +11,12 @@ task :cmake do
 end
 
 task :build do
-  Emplace.cmake
+  Emplace.build
 end
 
 task :package do
   chdir('dist') do
-    Emplace.package('cppunitx')
+    Emplace.package('cppunit')
   end
 end
 
