@@ -5,10 +5,14 @@ language: cpp
 compiler:
 - clang
 - gcc
-install:
-- gem install emplace
+before_script:
+- rake cmake
 script:
-- rake
+- rake build
+after_success:
+- rake test
+before_deploy:
+- rake package
 deploy:
   provider: releases
   api-key:

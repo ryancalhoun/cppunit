@@ -1,0 +1,13 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    emplace (0.1.2)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  emplace
+
+BUNDLED WITH
+   1.10.6

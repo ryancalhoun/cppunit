@@ -4,12 +4,12 @@ configuration:
   - RelWithDebInfo
   - Debug
 before_build:
-  - gem install emplace
-build_script:
   - rake cmake
+build_script:
   - rake build
-after_build:
+test_script:
   - rake test
+after_test:
   - rake package
 artifacts:
   - path: 'dist\cppunit*zip'
