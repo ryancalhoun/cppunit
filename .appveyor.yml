@@ -3,6 +3,8 @@ platform:
 configuration:
   - RelWithDebInfo
   - Debug
+install:
+  - bundle install
 before_build:
   - rake cmake
 build_script:
