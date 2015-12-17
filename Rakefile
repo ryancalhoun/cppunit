@@ -1,23 +1,23 @@
 require 'rake/testtask'
 require 'emplace'
 
+project = Emplace::Project.new 'cppunit'
+
 task :clean do
   rm_rf 'build'
   rm_rf 'dist'
 end
 
 task :cmake do
-  Emplace.cmake
+  project.cmake!
 end
 
 task :build do
-  Emplace.build
+  project.build!
 end
 
 task :package do
-  chdir('dist') do
-    Emplace.package('cppunit')
-  end
+  project.package!
 end
 
 Rake::TestTask.new {|t|

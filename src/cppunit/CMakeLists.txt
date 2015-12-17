@@ -69,6 +69,6 @@ include_directories(
 )
 
 add_library(cppunit STATIC ${SOURCES})
-install(TARGETS cppunit ARCHIVE DESTINATION ${CMAKE_SOURCE_DIR}/dist/cppunit/lib)
+install(TARGETS cppunit ARCHIVE DESTINATION lib)
 
 

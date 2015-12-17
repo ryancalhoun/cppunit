@@ -6,7 +6,7 @@ include_directories(
 	${CMAKE_SOURCE_DIR}/include
 )
 
-add_subdirectory(src/cppunit build/src/cppunit)
-add_subdirectory(test build/test)
+add_subdirectory(src/cppunit)
+add_subdirectory(test)
 
-install(DIRECTORY include/ DESTINATION ${CMAKE_SOURCE_DIR}/dist/cppunit/include)
+install(DIRECTORY include/ DESTINATION include)
