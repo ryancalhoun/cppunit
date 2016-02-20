@@ -46,7 +46,6 @@ TestCase::TestCase(const std::string& name)
 {
 }
 
-
 /// Run the test and catch any exceptions that are triggered by it 
 void TestCase::run(TestResult* result)
 {
@@ -59,12 +58,10 @@ void TestCase::run(TestResult* result)
 	result->endTest(this);
 }
 
-
 /// All the work for runTest is deferred to subclasses 
 void TestCase::runTest()
 {
 }
-
 
 /** Constructs a test case for a suite.
  * \deprecated This constructor was used by fixture when TestFixture did not exist.
@@ -78,12 +75,10 @@ TestCase::TestCase()
 {
 }
 
-
 /// Destructs a test case
 TestCase::~TestCase()
 {
 }
-
 
 /// Returns the name of the test case
 std::string TestCase::getName() const
@@ -91,5 +86,9 @@ std::string TestCase::getName() const
 	return m_name; 
 }
  
+std::string TestCase::getScopedName() const
+{
+	return m_name; 
+}
 
 CPPUNIT_NS_END

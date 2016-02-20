@@ -8,6 +8,7 @@ CPPUNIT_NS_BEGIN
 
 TextTestProgressListener::TextTestProgressListener()
 	: _failure(NULL)
+	, _verbose(false)
 {
 }
 
@@ -15,10 +16,18 @@ TextTestProgressListener::~TextTestProgressListener()
 {
 }
 
+void TextTestProgressListener::enableVerboseOutput()
+{
+	_verbose = true;
+}
+
 void TextTestProgressListener::startTest(Test* test)
 {
-	stdCOut() << test->getName() << " ";
-	stdCOut().flush();
+	if(_verbose)
+	{
+		stdCOut() << test->getScopedName() << " ";
+		stdCOut().flush();
+	}
 }
 
 void TextTestProgressListener::endTest(Test* test)
@@ -33,13 +42,24 @@ void TextTestProgressListener::endTest(Test* test)
 	{
 		stdCOut() << ".";
 	}
-	stdCOut() << "\n";
+
+	if(_verbose)
+		stdCOut() << "\n";
 	stdCOut().flush();
 }
 
 void TextTestProgressListener::addFailure(const TestFailure& failure)
 {
 	_failure = failure.clone();
+}
+
+void TextTestProgressListener::startTestRun(Test* test, TestResult*)
+{
+	if(_verbose)
+	{
+		stdCOut() << "Starting suite " << test->getName() << "\n";
+		stdCOut().flush();
+	}
 }
 
 void TextTestProgressListener::endTestRun(Test*, TestResult*)

@@ -36,6 +36,7 @@ public:
     virtual void run(TestResult* result);
 
     std::string getName() const;
+    std::string getScopedName() const;
 
     virtual void runTest() = 0;
     

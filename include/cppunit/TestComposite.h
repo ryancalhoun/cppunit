@@ -26,6 +26,7 @@ public:
   int countTestCases() const;
   
   std::string getName() const;
+  std::string getScopedName() const;
 
 private:
   TestComposite( const TestComposite &other );

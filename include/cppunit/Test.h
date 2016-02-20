@@ -63,6 +63,13 @@ public:
    */
   virtual std::string getName() const = 0;
 
+  /*! \brief Returns the scoped test name.
+   * 
+   * Each test has a name within the parents' scope.  This name is useful for
+   * logging verbose output.
+   */
+  virtual std::string getScopedName() const = 0;
+
   /*! \brief Finds the test with the specified name and its parents test.
    * \param testName Name of the test to find.
    * \param testPath If the test is found, then all the tests traversed to access

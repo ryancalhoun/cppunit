@@ -21,11 +21,14 @@ public:
 	/// Destructor.
 	virtual ~TextTestProgressListener();
 
+	void enableVerboseOutput();
+
 	void startTest(Test* test);
 	void endTest(Test* test);
 
 	void addFailure(const TestFailure& failure);
 
+	void startTestRun(Test* test, TestResult* eventManager);
 	void endTestRun(Test* test, TestResult* eventManager);
 
 private:
@@ -37,6 +40,7 @@ private:
 
 private:
 	TestFailure* _failure;
+	bool         _verbose;
 };
 
 

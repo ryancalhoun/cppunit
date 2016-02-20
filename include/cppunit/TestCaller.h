@@ -186,7 +186,7 @@ public:
 		return "TestCaller " + getName(); 
 	}
 
-	std::string getName() const
+	std::string getScopedName() const
 	{
 		return getTestClassName() + "::" + TestCase::getName();
 	}
