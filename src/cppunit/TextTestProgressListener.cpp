@@ -1,3 +1,4 @@
+#include <cppunit/Test.h>
 #include <cppunit/TestFailure.h>
 #include <cppunit/TextTestProgressListener.h>
 #include <cppunit/portability/Stream.h>
@@ -5,39 +6,46 @@
 
 CPPUNIT_NS_BEGIN
 
-
 TextTestProgressListener::TextTestProgressListener()
+	: _failure(NULL)
 {
 }
-
 
 TextTestProgressListener::~TextTestProgressListener()
 {
 }
 
-
-void 
-TextTestProgressListener::startTest( Test * )
+void TextTestProgressListener::startTest(Test* test)
 {
-  stdCOut() << ".";
-  stdCOut().flush();
+	stdCOut() << test->getName() << " ";
+	stdCOut().flush();
 }
 
-
-void 
-TextTestProgressListener::addFailure( const TestFailure &failure )
+void TextTestProgressListener::endTest(Test* test)
 {
-  stdCOut() << ( failure.isError() ? "E" : "F" );
-  stdCOut().flush();
+	if(_failure != NULL)
+	{
+		stdCOut() << (_failure->isError() ? "E" : "F");
+		delete _failure;
+		_failure = NULL;
+	}
+	else
+	{
+		stdCOut() << ".";
+	}
+	stdCOut() << "\n";
+	stdCOut().flush();
 }
 
-
-void 
-TextTestProgressListener::endTestRun( Test *, 
-                                      TestResult * )
+void TextTestProgressListener::addFailure(const TestFailure& failure)
 {
-  stdCOut()  <<  "\n";
-  stdCOut().flush();
+	_failure = failure.clone();
+}
+
+void TextTestProgressListener::endTestRun(Test*, TestResult*)
+{
+	stdCOut() << "\n";
+	stdCOut().flush();
 }
 
 

@@ -4,6 +4,12 @@
 #include <cppunit/Exception.h>
 #include <cppunit/TestCase.h>
 
+#include <typeinfo>
+#ifndef _WIN32
+#include <cstring>
+#include <cxxabi.h>
+#endif
+
 
 #if CPPUNIT_USE_TYPEINFO_NAME
 #  include <cppunit/extensions/TypeInfoHelper.h>
@@ -34,12 +40,12 @@ struct ExpectedExceptionTraits
   static void expectedException()
   {
 #if CPPUNIT_USE_TYPEINFO_NAME
-    throw Exception( Message(
+    throw Exception(Message(
                          "expected exception not thrown",
                          "Expected exception type: " + 
-                           TypeInfoHelper::getClassName( typeid( ExceptionType ) ) ) );
+                           TypeInfoHelper::getClassName(typeid(ExceptionType))));
 #else
-    throw Exception( "expected exception not thrown" );
+    throw Exception("expected exception not thrown");
 #endif
   }
 };
@@ -89,7 +95,7 @@ struct ExpectedExceptionTraits<NoExceptionExpected>
  * CppUnit::Test *MathTest::suite() {
  *     CppUnit::TestSuite *suite = new CppUnit::TestSuite;
  *
- *     suite->addTest( new CppUnit::TestCaller<MathTest>( "testAdd", testAdd ) );
+ *     suite->addTest(new CppUnit::TestCaller<MathTest>("testAdd", testAdd));
  *     return suite;
  * }
  * \endcode
@@ -103,95 +109,133 @@ struct ExpectedExceptionTraits<NoExceptionExpected>
 template <class Fixture>
 class TestCaller : public TestCase
 { 
-  typedef void (Fixture::*TestMethod)();
-    
+	typedef void (Fixture::*TestMethod)();
+
 public:
-  /*!
-   * Constructor for TestCaller. This constructor builds a new Fixture
-   * instance owned by the TestCaller.
-   * \param name name of this TestCaller
-   * \param test the method this TestCaller calls in runTest()
-   */
-  TestCaller( std::string name, TestMethod test ) :
-	    TestCase( name ), 
-	    m_ownFixture( true ),
-	    m_fixture( new Fixture() ),
-	    m_test( test )
-  {
-  }
+	/*!
+	 * Constructor for TestCaller. This constructor builds a new Fixture
+	 * instance owned by the TestCaller.
+	 * \param name name of this TestCaller
+	 * \param test the method this TestCaller calls in runTest()
+	 */
+	TestCaller(std::string name, TestMethod test) :
+		TestCase(name), 
+		m_ownFixture(true),
+		m_fixture(new Fixture()),
+		m_test(test)
+	{
+	}
 
-  /*!
-   * Constructor for TestCaller. 
-   * This constructor does not create a new Fixture instance but accepts
-   * an existing one as parameter. The TestCaller will not own the
-   * Fixture object.
-   * \param name name of this TestCaller
-   * \param test the method this TestCaller calls in runTest()
-   * \param fixture the Fixture to invoke the test method on.
-   */
-  TestCaller(std::string name, TestMethod test, Fixture& fixture) :
-	    TestCase( name ), 
-	    m_ownFixture( false ),
-	    m_fixture( &fixture ),
-	    m_test( test )
-  {
-  }
-    
-  /*!
-   * Constructor for TestCaller. 
-   * This constructor does not create a new Fixture instance but accepts
-   * an existing one as parameter. The TestCaller will own the
-   * Fixture object and delete it in its destructor.
-   * \param name name of this TestCaller
-   * \param test the method this TestCaller calls in runTest()
-   * \param fixture the Fixture to invoke the test method on.
-   */
-  TestCaller(std::string name, TestMethod test, Fixture* fixture) :
-	    TestCase( name ), 
-	    m_ownFixture( true ),
-	    m_fixture( fixture ),
-	    m_test( test )
-  {
-  }
-    
-  ~TestCaller() 
-  {
-    if (m_ownFixture)
-      delete m_fixture;
-  }
+	/*!
+	 * Constructor for TestCaller. 
+	 * This constructor does not create a new Fixture instance but accepts
+	 * an existing one as parameter. The TestCaller will not own the
+	 * Fixture object.
+	 * \param name name of this TestCaller
+	 * \param test the method this TestCaller calls in runTest()
+	 * \param fixture the Fixture to invoke the test method on.
+	 */
+	TestCaller(std::string name, TestMethod test, Fixture& fixture) :
+		TestCase(name), 
+		m_ownFixture(false),
+		m_fixture(&fixture),
+		m_test(test)
+	{
+	}
 
-  void runTest()
-  { 
-      (m_fixture->*m_test)();
-  }  
+	/*!
+	 * Constructor for TestCaller. 
+	 * This constructor does not create a new Fixture instance but accepts
+	 * an existing one as parameter. The TestCaller will own the
+	 * Fixture object and delete it in its destructor.
+	 * \param name name of this TestCaller
+	 * \param test the method this TestCaller calls in runTest()
+	 * \param fixture the Fixture to invoke the test method on.
+	 */
+	TestCaller(std::string name, TestMethod test, Fixture* fixture) :
+		TestCase(name), 
+		m_ownFixture(true),
+		m_fixture(fixture),
+		m_test(test)
+	{
+	}
 
-  void setUp()
-  { 
-  	m_fixture->setUp (); 
-  }
+	~TestCaller() 
+	{
+		if (m_ownFixture)
+			delete m_fixture;
+	}
 
-  void tearDown()
-  { 
-	  m_fixture->tearDown (); 
-  }
+	void runTest()
+	{ 
+		(m_fixture->*m_test)();
+	}  
 
-  std::string toString() const
-  { 
-  	return "TestCaller " + getName(); 
-  }
+	void setUp()
+	{ 
+		m_fixture->setUp (); 
+	}
+
+	void tearDown()
+	{ 
+		m_fixture->tearDown (); 
+	}
+
+	std::string toString() const
+	{ 
+		return "TestCaller " + getName(); 
+	}
+
+	std::string getName() const
+	{
+		return getTestClassName() + "::" + TestCase::getName();
+	}
 
 private: 
-  TestCaller( const TestCaller &other ); 
-  TestCaller &operator =( const TestCaller &other );
+	TestCaller(const TestCaller &other); 
+	TestCaller &operator =(const TestCaller &other);
 
-private:
-  bool m_ownFixture;
-  Fixture *m_fixture;
-  TestMethod m_test;
+	std::string getCallerClassName() const;
+	std::string getTestClassName() const;
+
+	private:
+	bool m_ownFixture;
+	Fixture *m_fixture;
+	TestMethod m_test;
 };
 
-
-
 CPPUNIT_NS_END
+
+template <class Fixture>
+inline std::string CPPUNIT_NS::TestCaller<Fixture>::getCallerClassName() const
+{
+	const std::type_info& thisClass = typeid (*this);
+
+#ifdef _WIN32
+	return thisClass.name();
+#else
+	// g++ typeid is a C++ mangled name, like "10TestCallerI8GZipTestE"
+	char buf[1024] = { 0 };
+	size_t length = sizeof(buf);
+	int status;
+	abi::__cxa_demangle(thisClass.name(), buf, &length, &status);
+	return std::string(buf, ::strnlen(buf, length));
+#endif
+}
+
+template <class Fixture>
+inline std::string CPPUNIT_NS::TestCaller<Fixture>::getTestClassName() const
+{
+	// g++ gives us "TestCase<TestClassName>.testMethodName()"
+    // vistual studio gives us "class TestCase<class TestClassName>.testMethodName()"
+
+	std::string longName = getCallerClassName();
+	std::string::size_type start = longName.find_last_of("< ");
+	std::string::size_type end = longName.find_last_of(">");
+	if(start == std::string::npos || end == std::string::npos)
+		return longName;
+
+	return longName.substr(start + 1, end - start - 1);
+}
 
 #endif // CPPUNIT_TESTCALLER_H

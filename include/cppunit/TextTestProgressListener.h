@@ -14,28 +14,29 @@ CPPUNIT_NS_BEGIN
 class CPPUNIT_API TextTestProgressListener : public TestListener
 {
 public:
-  /*! Constructs a TextTestProgressListener object.
-   */
-  TextTestProgressListener();
+	/*! Constructs a TextTestProgressListener object.
+	 */
+	TextTestProgressListener();
 
-  /// Destructor.
-  virtual ~TextTestProgressListener();
+	/// Destructor.
+	virtual ~TextTestProgressListener();
 
-  void startTest( Test *test );
+	void startTest(Test* test);
+	void endTest(Test* test);
 
-  void addFailure( const TestFailure &failure );
+	void addFailure(const TestFailure& failure);
 
-  void endTestRun( Test *test, 
-                   TestResult *eventManager );
-
-private:
-  /// Prevents the use of the copy constructor.
-  TextTestProgressListener( const TextTestProgressListener &copy );
-
-  /// Prevents the use of the copy operator.
-  void operator =( const TextTestProgressListener &copy );
+	void endTestRun(Test* test, TestResult* eventManager);
 
 private:
+	/// Prevents the use of the copy constructor.
+	TextTestProgressListener(const TextTestProgressListener& copy);
+
+	/// Prevents the use of the copy operator.
+	void operator=(const TextTestProgressListener& copy);
+
+private:
+	TestFailure* _failure;
 };
 
 
