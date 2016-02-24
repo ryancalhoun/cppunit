@@ -21,6 +21,7 @@ TextTestRunner::TextTestRunner(Outputter *outputter)
     : m_result(new TestResultCollector())
     , m_eventManager(new TestResult())
     , m_outputter(outputter)
+	, _verbose(false)
 {
 	if (!m_outputter)
 		m_outputter = new TextOutputter(m_result, stdCOut());
@@ -53,7 +54,8 @@ TextTestRunner::~TextTestRunner()
 bool TextTestRunner::run(std::string testName, bool doWait, bool doPrintResult, bool doPrintProgress)
 {
 	TextTestProgressListener progress;
-	progress.enableVerboseOutput();
+	if(_verbose)
+		progress.enableVerboseOutput();
 	if(doPrintProgress)
 		m_eventManager->addListener(&progress);
 
@@ -109,6 +111,10 @@ TestResult& TextTestRunner::eventManager() const
 	return *m_eventManager;
 }
 
+void TextTestRunner::enableVerboseOutput()
+{
+	_verbose = true;
+}
 
 /*! Specifies an alternate outputter.
  *

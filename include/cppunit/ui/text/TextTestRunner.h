@@ -34,8 +34,8 @@ class TestResultCollector;
  *
  * \code
  * CppUnit::TextTestRunner runner;
- * runner.addTest( ExampleTestCase::suite() );
- * runner.run( "", true );    // Run all tests and wait
+ * runner.addTest(ExampleTestCase::suite());
+ * runner.run("", true);    // Run all tests and wait
  * \endcode
  *
  * The trace is printed using a TextTestProgressListener. The summary is printed
@@ -49,13 +49,13 @@ class TestResultCollector;
  *
  * \code
  * CppUnit::TextTestRunner runner;
- * runner.addTest( ExampleTestCase::suite() );
- * runner.setOutputter( CppUnit::CompilerOutputter::defaultOutputter( 
+ * runner.addTest(ExampleTestCase::suite());
+ * runner.setOutputter(CppUnit::CompilerOutputter::defaultOutputter(
  *                          &runner.result(),
- *                          std::cerr ) );
+ *                          std::cerr));
  * MyCustomProgressTestListener progress;
- * runner.eventManager().addListener( &progress );
- * runner.run( "", true );    // Run all tests and wait
+ * runner.eventManager().addListener(&progress);
+ * runner.run("", true);    // Run all tests and wait
  * \endcode
  *
  * \see CompilerOutputter, XmlOutputter, TextOutputter.
@@ -63,38 +63,36 @@ class TestResultCollector;
 class CPPUNIT_API TextTestRunner : public CPPUNIT_NS::TestRunner
 {
 public:
-  TextTestRunner( Outputter *outputter =NULL );
+	TextTestRunner(Outputter *outputter =NULL);
 
-  virtual ~TextTestRunner();
+	virtual ~TextTestRunner();
 
-  bool run( std::string testPath ="",
-            bool doWait = false,
-            bool doPrintResult = true,
-            bool doPrintProgress = true );
+	bool run(std::string testPath ="", bool doWait = false, bool doPrintResult = true, bool doPrintProgress = true);
 
-  void setOutputter( Outputter *outputter );
+	void enableVerboseOutput();
+	void setOutputter(Outputter *outputter);
 
-  TestResultCollector &result() const;
+	TestResultCollector &result() const;
 
-  TestResult &eventManager() const;
+	TestResult &eventManager() const;
 
 public: // overridden from TestRunner (to avoid hidden virtual function warning)
-  virtual void run( TestResult &controller,
-                    const std::string &testPath = "" );
+	virtual void run(TestResult& controller, const std::string& testPath = "");
 
 protected:
-  virtual void wait( bool doWait );
-  virtual void printResult( bool doPrintResult );
+	virtual void wait(bool doWait);
+	virtual void printResult(bool doPrintResult);
 
 private:
-  // prohibit copying
-  TextTestRunner( const TextTestRunner& );
-  // prohibit copying
-  TextTestRunner& operator=( const TextTestRunner& );
+	// prohibit copying
+	TextTestRunner(const TextTestRunner&);
+	// prohibit copying
+	TextTestRunner& operator=(const TextTestRunner&);
 
-  TestResultCollector *m_result;
-  TestResult *m_eventManager;
-  Outputter *m_outputter;
+	TestResultCollector *m_result;
+	TestResult *m_eventManager;
+	Outputter *m_outputter;
+	bool _verbose;
 };
 
 

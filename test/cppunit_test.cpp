@@ -104,6 +104,7 @@ public:
 int main(int argc, const char* argv[])
 {
 	CppUnit::TextUi::TestRunner runner;
+	runner.enableVerboseOutput();
 
 	runner.addTest(FooTest::suite());
 	runner.run();
