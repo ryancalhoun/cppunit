@@ -67,6 +67,7 @@ public:
 
 	virtual ~TextTestRunner();
 
+	bool run(int argc, const char* argv[]);
 	bool run(std::string testPath ="", bool doWait = false, bool doPrintResult = true, bool doPrintProgress = true);
 
 	void enableVerboseOutput();

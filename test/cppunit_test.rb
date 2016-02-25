@@ -6,9 +6,16 @@ class CppUnitTest < Test::Unit::TestCase
     Dir.chdir(File.join(File.dirname(__FILE__), '..', 'build', 'test', ENV['CONFIGURATION'].to_s)) {
       output = `./cppunit_test`
       assert_equal 1, $?.exitstatus
-      assert_match /FooTest::test\w+/, output
       assert_match /Run:\s+7\s+Failures:\s+1\s+Errors:\s+0/, output
     }
   end
 
+  def testCppUnitVerbose
+    Dir.chdir(File.join(File.dirname(__FILE__), '..', 'build', 'test', ENV['CONFIGURATION'].to_s)) {
+      output = `./cppunit_test -V`
+      assert_equal 1, $?.exitstatus
+      assert_match /FooTest::test\w+/, output
+      assert_match /Run:\s+7\s+Failures:\s+1\s+Errors:\s+0/, output
+    }
+  end
 end

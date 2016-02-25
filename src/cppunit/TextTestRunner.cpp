@@ -9,6 +9,7 @@
 #include <cppunit/ui/text/TextTestRunner.h>
 #include <cppunit/portability/Stream.h>
 #include <stdexcept>
+#include <cstring>
 
 
 CPPUNIT_NS_BEGIN
@@ -36,6 +37,18 @@ TextTestRunner::~TextTestRunner()
 	delete m_result;
 }
 
+bool TextTestRunner::run(int argc, const char* argv[])
+{
+	for(int i = 0; i < argc; ++i)
+	{
+		if(::strncmp("-V", argv[i], 3) == 0 || ::strncmp("--verbose", argv[i], 10) == 0)
+		{
+			_verbose = true;
+			break;
+		}
+	}
+	return run();
+}
 
 /*! Runs the named test case.
  *
