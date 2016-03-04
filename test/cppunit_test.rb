@@ -34,9 +34,9 @@ class CppUnitTest < Test::Unit::TestCase
 
   def testCppUnitBadOption
     Dir.chdir(File.join(File.dirname(__FILE__), '..', 'build', 'test', ENV['CONFIGURATION'].to_s)) {
-      output, error, status = Open3.capture3 './cppunit_test -x'
+      output, error, status = Open3.capture3 './cppunit_test -X'
       assert_equal 1, status.exitstatus
-      assert_match /invalid option -x/, error
+      assert_match /invalid option -X/, error
     }
   end
 
@@ -69,6 +69,18 @@ class CppUnitTest < Test::Unit::TestCase
         assert_equal 1, $?.exitstatus
         assert_match /FooTest::test\w+/, output
         assert_match /Run:\s+\d+\s+Failures:\s+\d+\s+Errors:\s+\d+/, output
+      }
+    }
+  end
+
+  def testCppUnitXml
+    Dir.chdir(File.join(File.dirname(__FILE__), '..', 'build', 'test', ENV['CONFIGURATION'].to_s)) {
+      %w(-x --xml-output).each {|opt|
+        output = `./cppunit_test #{opt}`
+        assert_equal 1, $?.exitstatus
+        assert_match /<TestRun>/, output
+        assert_match /<FailedTests>/, output
+        assert_match /<SuccessfulTests>/, output
       }
     }
   end

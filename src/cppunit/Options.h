@@ -16,10 +16,13 @@ public:
 	void parse(int argc, const char* argv[]);
 
 	const std::vector<std::string>& testNames() const;
+
 	bool doWait() const;
 	bool doPrintResult() const;
 	bool doPrintProgress() const;
 	bool doPrintVerbose() const;
+
+	bool doXmlOutput() const;
 
 protected:
 	void exitVersionMessage();
@@ -37,6 +40,8 @@ protected:
 	bool                     _doPrintResult;
 	bool                     _doPrintProgress;
 	bool                     _doPrintVerbose;
+
+	bool                     _doXmlOutput;
 };
 
 CPPUNIT_NS_END

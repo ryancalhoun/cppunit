@@ -37,6 +37,7 @@ CppUnit test driver
   -w --wait               Wait to exit until user presses RETURN
   -r --no-print-result    Disable printing test result
   -p --no-print-progress  Disable printing test progress
+  -x --xml-output         Enable xml output for test result
 ```
 
 ## Define each test suite

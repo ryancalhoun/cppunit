@@ -9,6 +9,7 @@ CPPUNIT_NS::Options::Options(std::ostream& out, std::ostream& error)
 	, _doPrintResult(true)
 	, _doPrintProgress(true)
 	, _doPrintVerbose(false)
+	, _doXmlOutput(false)
 {}
 
 void CPPUNIT_NS::Options::parse(int argc, const char* argv[])
@@ -38,6 +39,10 @@ void CPPUNIT_NS::Options::parse(int argc, const char* argv[])
 		else if(option == "-p" || option == "--no-print-progress")
 		{
 			_doPrintProgress = false;
+		}
+		else if(option == "-x" || option == "--xml-output")
+		{
+			_doXmlOutput = true;
 		}
 		else if(option == "-v" || option == "--version")
 		{
@@ -83,6 +88,11 @@ bool CPPUNIT_NS::Options::doPrintVerbose() const
 	return _doPrintVerbose;
 }
 
+bool CPPUNIT_NS::Options::doXmlOutput() const
+{
+	return _doXmlOutput;
+}
+
 void CPPUNIT_NS::Options::exitVersionMessage()
 {
 	_out << _program << ": CppUnit " << CPPUNIT_VERSION << " (" << __DATE__ << ")" << std::endl;
@@ -101,6 +111,7 @@ void CPPUNIT_NS::Options::exitHelpMessage(int code)
 	_out << "  -w --wait               Wait to exit until user presses RETURN" << std::endl;
 	_out << "  -r --no-print-result    Disable printing test result" << std::endl;
 	_out << "  -p --no-print-progress  Disable printing test progress" << std::endl;
+	_out << "  -x --xml-output         Enable xml output for test result" << std::endl;
 
 	_out << std::endl;
 

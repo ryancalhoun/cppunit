@@ -6,6 +6,7 @@
 #include <cppunit/TextOutputter.h>
 #include <cppunit/TextTestProgressListener.h>
 #include <cppunit/TestResult.h>
+#include <cppunit/XmlOutputter.h>
 #include <cppunit/ui/text/TextTestRunner.h>
 #include <cppunit/portability/Stream.h>
 #include <stdexcept>
@@ -49,6 +50,10 @@ bool TextTestRunner::run(int argc, const char* argv[])
 {
 	Options opts(stdCOut(), stdCErr());
 	opts.parse(argc, argv);
+
+	if(opts.doXmlOutput())
+		setOutputter(new XmlOutputter(m_result, stdCOut()));
+
 	return run(opts.testNames(), opts.doWait(), opts.doPrintResult(), opts.doPrintProgress(), opts.doPrintVerbose());
 }
 
