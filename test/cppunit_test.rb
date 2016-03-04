@@ -1,4 +1,5 @@
 require 'test/unit'
+require 'open3'
 
 class CppUnitTest < Test::Unit::TestCase
 
@@ -23,9 +24,9 @@ class CppUnitTest < Test::Unit::TestCase
 
   def testCppUnitBadOption
     Dir.chdir(File.join(File.dirname(__FILE__), '..', 'build', 'test', ENV['CONFIGURATION'].to_s)) {
-      output = `./cppunit_test -x 2>&1`
-      assert_equal 1, $?.exitstatus
-      assert_match /invalid option -x/, output
+      output, error, status = Open3.capture3 './cppunit_test -x'
+      assert_equal 1, status.exitstatus
+      assert_match /invalid option -x/, error
     }
   end
 
