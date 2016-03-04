@@ -48,7 +48,7 @@ void TextTestProgressListener::endTest(Test* test)
 	}
 
 	if(_verbose)
-		stdCOut() << "\n";
+		stdCOut() << std::endl;
 	stdCOut().flush();
 }
 
@@ -61,14 +61,14 @@ void TextTestProgressListener::startTestRun(Test* test, TestResult*)
 {
 	if(_verbose)
 	{
-		stdCOut() << "Starting suite " << test->getName() << "\n";
+		stdCOut() << "Starting suite " << test->getName() << std::endl;
 		stdCOut().flush();
 	}
 }
 
 void TextTestProgressListener::endTestRun(Test*, TestResult*)
 {
-	stdCOut() << "\n";
+	stdCOut() << std::endl;
 	stdCOut().flush();
 }
 

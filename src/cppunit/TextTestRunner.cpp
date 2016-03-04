@@ -19,12 +19,12 @@ CPPUNIT_NS_BEGIN
 /*! Constructs a new text runner.
  * \param outputter used to print text result. Owned by the runner.
  */
-TextTestRunner::TextTestRunner(Outputter *outputter) 
+TextTestRunner::TextTestRunner(Outputter* outputter) 
     : m_result(new TestResultCollector())
     , m_eventManager(new TestResult())
     , m_outputter(outputter)
 {
-	if (!m_outputter)
+	if(! m_outputter)
 		m_outputter = new TextOutputter(m_result, stdCOut());
 	m_eventManager->addListener(m_result);
 }
@@ -78,6 +78,9 @@ bool TextTestRunner::run(const std::vector<std::string>& testNames, bool doWait,
 			progress.enableVerboseOutput();
 	}
 
+	if(doPrintResult)
+		stdCOut() << std::endl;
+
 	TestRunner *pThis = this;
 
 	if(testNames.empty())
@@ -90,7 +93,7 @@ bool TextTestRunner::run(const std::vector<std::string>& testNames, bool doWait,
 			pThis->run(*m_eventManager, *it);
 	}
 
-	if (doPrintProgress)
+	if(doPrintProgress)
 		m_eventManager->removeListener(&progress);
 
 	printResult(doPrintResult);
@@ -105,7 +108,7 @@ void TextTestRunner::wait(bool doWait)
 #if !defined(CPPUNIT_NO_STREAM)
 	if (doWait) 
 	{
-		stdCOut() << "<RETURN> to continue\n";
+		stdCOut() << "<RETURN> to continue" << std::endl;
 		stdCOut().flush();
 		std::cin.get ();
 	}
@@ -115,8 +118,8 @@ void TextTestRunner::wait(bool doWait)
 
 void TextTestRunner::printResult(bool doPrintResult)
 {
-	stdCOut() << "\n";
-	if (doPrintResult)
+	stdCOut() << std::endl;
+	if(doPrintResult)
 		m_outputter->write();
 }
 
