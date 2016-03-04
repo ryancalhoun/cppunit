@@ -6,8 +6,8 @@ class CppUnitTest < Test::Unit::TestCase
     Dir.chdir(File.join(File.dirname(__FILE__), '..', 'build', 'test', ENV['CONFIGURATION'].to_s)) {
       output = `./cppunit_test`
       assert_equal 1, $?.exitstatus
-      assert output.index '.F......'
-      assert_match /Run:\s+8\s+Failures:\s+1\s+Errors:\s+0/, output
+      assert_match /^[\.FE]+$/, output
+      assert_match /Run:\s+\d+\s+Failures:\s+\d+\s+Errors:\s+\d+/, output
     }
   end
 
@@ -34,8 +34,8 @@ class CppUnitTest < Test::Unit::TestCase
       %w(-p --no-print-progress).each {|opt|
         output = `./cppunit_test #{opt}`
         assert_equal 1, $?.exitstatus
-        assert_nil output.index '.F......'
-        assert_match /Run:\s+8\s+Failures:\s+1\s+Errors:\s+0/, output
+        assert_no_match /^[\.FE]+$/, output
+        assert_match /Run:\s+\d+\s+Failures:\s+\d+\s+Errors:\s+\d+/, output
       }
     }
   end
@@ -45,8 +45,8 @@ class CppUnitTest < Test::Unit::TestCase
       %w(-r --no-print-result).each {|opt|
         output = `./cppunit_test #{opt}`
         assert_equal 1, $?.exitstatus
-        assert output.index '.F......'
-        assert_no_match /Run:\s+8\s+Failures:\s+1\s+Errors:\s+0/, output
+        assert_match /^[\.FE]+$/, output
+        assert_no_match /Run:\s+\d+\s+Failures:\s+\d+\s+Errors:\s+\d+/, output
       }
     }
   end
@@ -57,7 +57,7 @@ class CppUnitTest < Test::Unit::TestCase
         output = `./cppunit_test #{opt}`
         assert_equal 1, $?.exitstatus
         assert_match /FooTest::test\w+/, output
-        assert_match /Run:\s+8\s+Failures:\s+1\s+Errors:\s+0/, output
+        assert_match /Run:\s+\d+\s+Failures:\s+\d+\s+Errors:\s+\d+/, output
       }
     }
   end
@@ -68,7 +68,7 @@ class CppUnitTest < Test::Unit::TestCase
       assert_equal 1, $?.exitstatus
       assert_match /FooTest/, output
       assert_no_match /BarTest/, output
-      assert_match /Run:\s+7\s+Failures:\s+1\s+Errors:\s+0/, output
+      assert_match /Run:\s+\d+\s+Failures:\s+\d+\s+Errors:\s+\d+/, output
 
       output = `./cppunit_test -V BarTest`
       assert_equal 0, $?.exitstatus

@@ -64,6 +64,11 @@ public:
 		assert_throw(int, throw 42);
 	}
 
+	void testThrowNoAssert()
+	{
+		throw 42;
+	}
+
 	void testMessage()
 	{
 		assert_true(true, "message");
@@ -93,6 +98,7 @@ public:
 		CPPUNIT_ADD_TEST(suite, testIntegers);
 		CPPUNIT_ADD_TEST(suite, testDoubles);
 		CPPUNIT_ADD_TEST(suite, testThrow);
+		CPPUNIT_ADD_TEST(suite, testThrowNoAssert);
 
 		CPPUNIT_ADD_TEST(suite, testMessage);
 
