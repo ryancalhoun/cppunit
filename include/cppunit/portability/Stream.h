@@ -9,6 +9,9 @@
 
 #include <cppunit/Portability.h>
 
+#ifndef _WIN32
+  #include <unistd.h>
+#endif
 
 #if defined( CPPUNIT_NO_STREAM )
 
@@ -277,6 +280,11 @@ inline OStream &stdCErr()
    return stream;
 }
 
+inline bool isaTTY()
+{
+	return false;
+}
+
 CPPUNIT_NS_END
 
 #elif CPPUNIT_HAVE_SSTREAM // #if defined( CPPUNIT_NO_STREAM )
@@ -338,6 +346,15 @@ CPPUNIT_NS_END
     {
        return std::cerr;
     }
+
+	inline bool isaTTY()
+	{
+		#ifdef _WIN32
+		return false;
+		#else
+		return ::isatty(1) == 1;
+		#endif
+	}
 
     CPPUNIT_NS_END
    

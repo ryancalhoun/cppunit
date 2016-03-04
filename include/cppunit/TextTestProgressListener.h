@@ -3,9 +3,7 @@
 
 #include <cppunit/TestListener.h>
 
-
 CPPUNIT_NS_BEGIN
-
 
 /*! 
  * \brief TestListener that show the status of each TestCase test result.
@@ -31,6 +29,16 @@ public:
 	void startTestRun(Test* test, TestResult* eventManager);
 	void endTestRun(Test* test, TestResult* eventManager);
 
+protected:
+	static const char* black;
+	static const char* red;
+	static const char* green;
+
+	void writeSuccess();
+	void writeFailure();
+	void writeError();
+	void writeProgress(char progress, const char* color);
+
 private:
 	/// Prevents the use of the copy constructor.
 	TextTestProgressListener(const TextTestProgressListener& copy);
@@ -41,6 +49,7 @@ private:
 private:
 	TestFailure* _failure;
 	bool         _verbose;
+	bool         _color;
 };
 
 

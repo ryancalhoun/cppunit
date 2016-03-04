@@ -9,6 +9,7 @@ CPPUNIT_NS_BEGIN
 TextTestProgressListener::TextTestProgressListener()
 	: _failure(NULL)
 	, _verbose(false)
+	, _color(isaTTY())
 {
 }
 
@@ -34,13 +35,16 @@ void TextTestProgressListener::endTest(Test* test)
 {
 	if(_failure != NULL)
 	{
-		stdCOut() << (_failure->isError() ? "E" : "F");
+		if(_failure->isError())
+			writeError();
+		else
+			writeFailure();
 		delete _failure;
 		_failure = NULL;
 	}
 	else
 	{
-		stdCOut() << ".";
+		writeSuccess();
 	}
 
 	if(_verbose)
@@ -68,6 +72,34 @@ void TextTestProgressListener::endTestRun(Test*, TestResult*)
 	stdCOut().flush();
 }
 
+const char* TextTestProgressListener::red = "\x1b[31m";
+const char* TextTestProgressListener::green = "\x1b[32m";
+const char* TextTestProgressListener::black = "\x1b[0m";
+
+void TextTestProgressListener::writeSuccess()
+{
+	writeProgress('.', green);
+}
+
+void TextTestProgressListener::writeFailure()
+{
+	writeProgress('F', red);
+}
+
+void TextTestProgressListener::writeError()
+{
+	writeProgress('E', red);
+}
+
+void TextTestProgressListener::writeProgress(char progress, const char* color)
+{
+	if(_color)
+		stdCOut() << color;
+	stdCOut() << progress;
+	if(_color)
+		stdCOut() << black;
+	stdCOut().flush();
+}
 
 CPPUNIT_NS_END
 
