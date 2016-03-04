@@ -77,4 +77,13 @@ class CppUnitTest < Test::Unit::TestCase
       assert_match /OK\s+\(1\stests\)/, output
     }
   end
+
+  def testCppUnitByMethod
+    Dir.chdir(File.join(File.dirname(__FILE__), '..', 'build', 'test', ENV['CONFIGURATION'].to_s)) {
+      output = `./cppunit_test -V FooTest::testOk`
+      assert_equal 0, $?.exitstatus
+      assert_match /FooTest::testOk/, output
+      assert_match /OK\s+\(1\stests\)/, output
+    }
+  end
 end
