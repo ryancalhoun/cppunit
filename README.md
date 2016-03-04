@@ -25,6 +25,20 @@ int main(int argc, const char* argv[])
   return runner.result().testFailures();
 }
 ```
+
+CppUnit will parse the given command-line options and allow some control over the manner of running. The test runner can also display the CppUnit version, or a help message like this:
+```
+cppunit_test [options] TEST...
+CppUnit test driver
+
+  -h --help               Show this help message
+  -v --version            Show version banner
+  -V --verbose            Enable verbose progress output
+  -w --wait               Wait to exit until user presses RETURN
+  -r --no-print-result    Disable printing test result
+  -p --no-print-progress  Disable printing test progress
+```
+
 ## Define each test suite
 ```c++
 #include "cppunit/CppUnit.h"
