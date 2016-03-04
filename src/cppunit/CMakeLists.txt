@@ -12,6 +12,8 @@ set(SOURCES
 	DynamicLibraryManagerException.cpp
 	Exception.cpp
 	Message.cpp
+	Options.cpp
+	Options.h
 	PlugInManager.cpp
 	PlugInParameters.cpp
 	Protector.cpp

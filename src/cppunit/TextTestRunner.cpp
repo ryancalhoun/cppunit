@@ -9,7 +9,8 @@
 #include <cppunit/ui/text/TextTestRunner.h>
 #include <cppunit/portability/Stream.h>
 #include <stdexcept>
-#include <cstring>
+
+#include "Options.h"
 
 
 CPPUNIT_NS_BEGIN
@@ -22,7 +23,6 @@ TextTestRunner::TextTestRunner(Outputter *outputter)
     : m_result(new TestResultCollector())
     , m_eventManager(new TestResult())
     , m_outputter(outputter)
-	, _verbose(false)
 {
 	if (!m_outputter)
 		m_outputter = new TextOutputter(m_result, stdCOut());
@@ -37,23 +37,25 @@ TextTestRunner::~TextTestRunner()
 	delete m_result;
 }
 
+/*! Runs the test cases according to provided arguments.
+ *
+ * \param argc Argument count, as given by main().
+ * \param argv Argument values, as given by main(). Run program with --help
+ *             for a comprehensive list of program options.
+ * \return \c true if the tests were successful, \c false if the tests
+ *         failed or were not found.
+ */
 bool TextTestRunner::run(int argc, const char* argv[])
 {
-	for(int i = 0; i < argc; ++i)
-	{
-		if(::strncmp("-V", argv[i], 3) == 0 || ::strncmp("--verbose", argv[i], 10) == 0)
-		{
-			_verbose = true;
-			break;
-		}
-	}
-	return run();
+	Options opts(stdCOut(), stdCErr());
+	opts.parse(argc, argv);
+	return run(opts.testNames(), opts.doWait(), opts.doPrintResult(), opts.doPrintProgress(), opts.doPrintVerbose());
 }
 
 /*! Runs the named test case.
  *
- * \param testName Name of the test case to run. If an empty is given, then
- *                 all added tests are run. The name can be the name of any
+ * \param testNames Names of the test cases to run. If an empty is given, then
+ *                 all added tests are run. The names can be the name of any
  *                 test in the hierarchy.
  * \param doWait if \c true then the user must press the RETURN key 
  *               before the run() method exit.
@@ -61,19 +63,32 @@ bool TextTestRunner::run(int argc, const char* argv[])
  *                      on the standard output.
  * \param doPrintProgress if \c true (default) then TextTestProgressListener is
  *                        used to show the progress.
- * \return \c true is the test was successful, \c false if the test
- *         failed or was not found.
+ * \param doPrintVerbose if \c true then TextTestProgressListener is
+ *                       put into verbose mode.
+ * \return \c true is the tests were successful, \c false if the tests
+ *         failed or were not found.
  */
-bool TextTestRunner::run(std::string testName, bool doWait, bool doPrintResult, bool doPrintProgress)
+bool TextTestRunner::run(const std::vector<std::string>& testNames, bool doWait, bool doPrintResult, bool doPrintProgress, bool doPrintVerbose)
 {
 	TextTestProgressListener progress;
-	if(_verbose)
-		progress.enableVerboseOutput();
 	if(doPrintProgress)
+	{
 		m_eventManager->addListener(&progress);
+		if(doPrintVerbose)
+			progress.enableVerboseOutput();
+	}
 
 	TestRunner *pThis = this;
-	pThis->run(*m_eventManager, testName);
+
+	if(testNames.empty())
+	{
+		pThis->run(*m_eventManager, "");
+	}
+	else
+	{
+		for(std::vector<std::string>::const_iterator it = testNames.begin(); it != testNames.end(); ++it)
+			pThis->run(*m_eventManager, *it);
+	}
 
 	if (doPrintProgress)
 		m_eventManager->removeListener(&progress);
@@ -124,10 +139,6 @@ TestResult& TextTestRunner::eventManager() const
 	return *m_eventManager;
 }
 
-void TextTestRunner::enableVerboseOutput()
-{
-	_verbose = true;
-}
 
 /*! Specifies an alternate outputter.
  *

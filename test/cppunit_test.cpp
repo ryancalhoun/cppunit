@@ -101,11 +101,29 @@ public:
 
 };
 
+class BarTest : public CppUnit::TestFixture
+{
+public:
+	void testOk()
+	{
+		assert_true(true);
+	}
+
+	static CppUnit::Test* suite()
+	{
+		CPPUNIT_DEFINE_SUITE(suite, BarTest);
+		CPPUNIT_ADD_TEST(suite, testOk);
+
+		return suite;
+	}
+};
+
 int main(int argc, const char* argv[])
 {
 	CppUnit::TextUi::TestRunner runner;
 
 	runner.addTest(FooTest::suite());
+	runner.addTest(BarTest::suite());
 	runner.run(argc, argv);
 
 	return runner.result().testFailures();

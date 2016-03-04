@@ -4,6 +4,7 @@
 
 #include <cppunit/Portability.h>
 #include <string>
+#include <vector>
 #include <cppunit/TestRunner.h>
 
 CPPUNIT_NS_BEGIN
@@ -68,9 +69,8 @@ public:
 	virtual ~TextTestRunner();
 
 	bool run(int argc, const char* argv[]);
-	bool run(std::string testPath ="", bool doWait = false, bool doPrintResult = true, bool doPrintProgress = true);
+	bool run(const std::vector<std::string>& testPaths = std::vector<std::string>(), bool doWait = false, bool doPrintResult = true, bool doPrintProgress = true, bool doPrintVerbose = false);
 
-	void enableVerboseOutput();
 	void setOutputter(Outputter *outputter);
 
 	TestResultCollector &result() const;
@@ -93,7 +93,6 @@ private:
 	TestResultCollector *m_result;
 	TestResult *m_eventManager;
 	Outputter *m_outputter;
-	bool _verbose;
 };
 
 
