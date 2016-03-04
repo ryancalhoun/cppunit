@@ -2,6 +2,9 @@ cmake_minimum_required(VERSION 2.8)
 
 project(cppunit)
 
+file(STRINGS ${CMAKE_BINARY_DIR}/cppunit_version.txt VERSION)
+add_definitions(-DCPPUNIT_VERSION="${VERSION}")
+
 include_directories(
 	${CMAKE_SOURCE_DIR}/include
 )

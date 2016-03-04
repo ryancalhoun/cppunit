@@ -12,6 +12,16 @@ class CppUnitTest < Test::Unit::TestCase
     }
   end
 
+  def testCppUnitVersion
+    Dir.chdir(File.join(File.dirname(__FILE__), '..', 'build', 'test', ENV['CONFIGURATION'].to_s)) {
+      %w(-v --version).each {|opt|
+        output = `./cppunit_test #{opt}`
+        assert_equal 0, $?.exitstatus
+        assert_match /CppUnit v/, output
+      }
+    }
+  end
+
   def testCppUnitHelp
     Dir.chdir(File.join(File.dirname(__FILE__), '..', 'build', 'test', ENV['CONFIGURATION'].to_s)) {
       %w(-h --help).each {|opt|

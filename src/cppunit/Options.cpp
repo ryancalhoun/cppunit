@@ -16,7 +16,7 @@ void CPPUNIT_NS::Options::parse(int argc, const char* argv[])
 	if(argc > 0)
 	{
 		_program = argv[0];
-		std::string::size_type s = _program.rfind("/\\");
+		std::string::size_type s = _program.find_last_of("/\\");
 		if(s != std::string::npos)
 			_program = _program.substr(s + 1);
 	}
@@ -38,6 +38,10 @@ void CPPUNIT_NS::Options::parse(int argc, const char* argv[])
 		else if(option == "-p" || option == "--no-print-progress")
 		{
 			_doPrintProgress = false;
+		}
+		else if(option == "-v" || option == "--version")
+		{
+			exitVersionMessage();
 		}
 		else if(option == "-h" || option == "--help")
 		{
@@ -79,6 +83,12 @@ bool CPPUNIT_NS::Options::doPrintVerbose() const
 	return _doPrintVerbose;
 }
 
+void CPPUNIT_NS::Options::exitVersionMessage()
+{
+	_out << _program << ": CppUnit " << CPPUNIT_VERSION << " (" << __DATE__ << ")" << std::endl;
+	::exit(0);
+}
+
 void CPPUNIT_NS::Options::exitHelpMessage(int code)
 {
 	_out << _program << " [options] TEST..." << std::endl;
@@ -86,6 +96,7 @@ void CPPUNIT_NS::Options::exitHelpMessage(int code)
 	_out << std::endl;
 
 	_out << "  -h --help               Show this help message" << std::endl;
+	_out << "  -v --version            Show version banner" << std::endl;
 	_out << "  -V --verbose            Enable verbose progress output" << std::endl;
 	_out << "  -w --wait               Wait to exit until user presses RETURN" << std::endl;
 	_out << "  -r --no-print-result    Disable printing test result" << std::endl;

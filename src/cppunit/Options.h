@@ -22,6 +22,7 @@ public:
 	bool doPrintVerbose() const;
 
 protected:
+	void exitVersionMessage();
 	void exitHelpMessage(int code = 0);
 	void exitErrorMessage(const std::string& option);
 

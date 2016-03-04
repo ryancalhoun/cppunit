@@ -8,7 +8,11 @@ task :clean do
   rm_rf 'dist'
 end
 
-task :cmake do
+file "build/cppunit_version.txt" do
+  sh "git describe --tags > build/cppunit_version.txt"
+end
+
+task :cmake => ['build/cppunit_version.txt'] do
   project.cmake!
 end
 
