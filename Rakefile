@@ -8,7 +8,8 @@ task :clean do
   rm_rf 'dist'
 end
 
-file "build/cppunit_version.txt" do
+directory './build'
+file "build/cppunit_version.txt" => ['./build'] do
   sh "git describe --tags > build/cppunit_version.txt"
 end
 
