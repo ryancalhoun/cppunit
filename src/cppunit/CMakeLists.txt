@@ -74,3 +74,17 @@ add_library(cppunit STATIC ${SOURCES})
 install(TARGETS cppunit ARCHIVE DESTINATION lib)
 
 
+if(WIN32)
+	add_custom_command(
+		TARGET cppunit
+		POST_BUILD
+		COMMAND dir /s
+		WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+	)
+
+	install(
+		FILES "${CMAKE_CURRENT_BINARY_DIR}/$(CONFIGURATION)/cppunit.pbd"
+		DESTINATION lib
+		CONFIGURATIONS Debug RelWithDebInfo
+	)
+endif()
