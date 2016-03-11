@@ -76,12 +76,12 @@ install(TARGETS cppunit ARCHIVE DESTINATION lib)
 
 if(WIN32)
 	install(
-		FILES ${CMAKE_CURRENT_BINARY_DIR}/cppunit.dir/Debug/cppunit.pbd
+		FILES ${CMAKE_CURRENT_BINARY_DIR}/cppunit.dir/Debug/cppunit.pdb
 		DESTINATION symbols
 		CONFIGURATIONS Debug
 	)
 	install(
-		FILES ${CMAKE_CURRENT_BINARY_DIR}/cppunit.dir/RelWithDebInfo/cppunit.pbd
+		FILES ${CMAKE_CURRENT_BINARY_DIR}/cppunit.dir/RelWithDebInfo/cppunit.pdb
 		DESTINATION symbols
 		CONFIGURATIONS RelWithDebInfo
 	)
