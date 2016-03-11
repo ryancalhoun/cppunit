@@ -83,8 +83,8 @@ if(WIN32)
 	)
 
 	install(
-		FILES "${CMAKE_CURRENT_BINARY_DIR}/$(CONFIGURATION)/cppunit.pbd"
-		DESTINATION lib
+		FILES "${CMAKE_CURRENT_BINARY_DIR}/cppunit.dir/$(CONFIGURATION)/cppunit.pbd"
+		DESTINATION symbols
 		CONFIGURATIONS Debug RelWithDebInfo
 	)
 endif()
