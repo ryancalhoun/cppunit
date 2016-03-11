@@ -75,15 +75,8 @@ install(TARGETS cppunit ARCHIVE DESTINATION lib)
 
 
 if(WIN32)
-	add_custom_command(
-		TARGET cppunit
-		POST_BUILD
-		COMMAND dir /s
-		WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
-	)
-
 	install(
-		FILES "${CMAKE_CURRENT_BINARY_DIR}/cppunit.dir/$(CONFIGURATION)/cppunit.pbd"
+		FILES "${CMAKE_CURRENT_BINARY_DIR}/cppunit.dir/$${CMAKE_BUILD_TYPE}/cppunit.pbd"
 		DESTINATION symbols
 		CONFIGURATIONS Debug RelWithDebInfo
 	)
