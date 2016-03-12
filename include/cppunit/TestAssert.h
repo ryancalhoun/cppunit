@@ -394,7 +394,7 @@ void assertGreaterEqual(int expected, unsigned long long actual, SourceLine sour
       cpputMsg_.addDetail(message);                                         \
                                                                               \
       try {                                                                   \
-         expression;                                                          \
+         (void)expression;                                                   \
       } catch (const std::exception &e) {                                   \
          cpputMsg_.addDetail("Caught: " +                                    \
                               CPPUNIT_EXTRACT_EXCEPTION_TYPE_(e,             \
