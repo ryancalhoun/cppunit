@@ -78,7 +78,6 @@ if(WIN32)
 add_custom_command(
 	TARGET cppunit POST_BUILD
 	COMMAND echo "${CMAKE_CURRENT_BINARY_DIR}/$(IntDir)cppunit.pdb"
-	COMMAND dir "${CMAKE_CURRENT_BINARY_DIR}/$(IntDir)cppunit.pdb"
 	WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
 )
 install(
