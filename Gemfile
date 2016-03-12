@@ -1,3 +1,3 @@
 source 'https://rubygems.org'
 
-gem 'emplace'
+gem 'emplace', '~>0.2'
