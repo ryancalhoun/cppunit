@@ -72,16 +72,5 @@ include_directories(
 
 add_library(cppunit STATIC ${SOURCES})
 install(TARGETS cppunit ARCHIVE DESTINATION lib)
-#install_symbols(TARGETS cppunit STATIC DESTINATION symbols)
+install_symbols(TARGETS cppunit STATIC DESTINATION symbols)
 
-if(WIN32)
-add_custom_command(
-	TARGET cppunit POST_BUILD
-	COMMAND echo "${CMAKE_CURRENT_BINARY_DIR}/$(IntDir)cppunit.pdb"
-	WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
-)
-install(
-	FILES "${CMAKE_CURRENT_BINARY_DIR}/$(IntDir)cppunit.pdb"
-	DESTINATION symbols
-)
-endif()
