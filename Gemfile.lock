@@ -1,14 +1,14 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    emplace (0.2.1)
+    emplace (0.3.0)
 
 PLATFORMS
   ruby
   x64-mingw32
 
 DEPENDENCIES
-  emplace (~> 0.2.1)
+  emplace (~> 0.3.0)
 
 BUNDLED WITH
    1.11.2
