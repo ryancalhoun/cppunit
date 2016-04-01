@@ -72,5 +72,5 @@ include_directories(
 
 add_library(cppunit STATIC ${SOURCES})
 install(TARGETS cppunit ARCHIVE DESTINATION lib)
-install_symbols(TARGETS cppunit STATIC DESTINATION symbols)
+install_symbols(TARGETS cppunit STATIC DESTINATION lib)
 
