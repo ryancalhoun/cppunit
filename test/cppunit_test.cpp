@@ -52,6 +52,12 @@ public:
 		assert_greater(4, 8u);
 		assert_greater_equal(4u, 8);
 	}
+	void testPointers()
+	{
+		void* p1 = NULL;
+		assert_equal(NULL, p1);
+		assert_equal(p1, NULL);
+	}
 
 	void testDoubles()
 	{

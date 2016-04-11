@@ -152,6 +152,7 @@ void assertEquals(const T& expected,
 
 void assertEquals(const char* expected, const std::string& actual, SourceLine sourceLine, const std::string& message);
 void assertEquals(int expected, unsigned long long actual, SourceLine sourceLine, const std::string& message);
+void assertEquals(const void* expected, const void* actual, SourceLine sourceLine, const std::string& message);
 
 
 /*! \brief (Implementation) Asserts that two double are equals given a tolerance.

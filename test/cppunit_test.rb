@@ -111,6 +111,8 @@ class CppUnitTest < Test::Unit::TestCase
   end
 
   def configuration
-    ENV['CONFIGURAtION'] || 'Debug'
+    if RUBY_PLATFORM =~ /mswin|mingw/
+      ENV['CONFIGURAtION'] || 'Debug'
+    end
   end
 end
