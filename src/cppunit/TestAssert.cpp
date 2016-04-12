@@ -13,6 +13,11 @@ void assertEquals(int expected, unsigned long long actual, SourceLine sourceLine
 	assertEquals<int>(expected, (int)actual, sourceLine, message);
 }
 
+void assertEquals(const void* expected, const void* actual, SourceLine sourceLine, const std::string& message)
+{
+	assertEquals<const void*>(expected, actual, sourceLine, message);
+}
+
 void assertLess(int expected, unsigned long long actual, SourceLine sourceLine, const std::string& message)
 {
 	assertLess<int>(expected, (int)actual, sourceLine, message);
