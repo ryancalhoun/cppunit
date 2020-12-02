@@ -1,0 +1,8 @@
+stages:
+- build
+
+build:
+  script:
+  - bundle install
+  - rake cmake
+  - rake build
