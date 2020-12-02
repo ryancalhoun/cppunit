@@ -4,8 +4,6 @@ configuration:
   - RelWithDebInfo
   - Debug
 install:
-  - ruby --version
-  - bundle --version
   - bundle install
 before_build:
   - rake cmake
