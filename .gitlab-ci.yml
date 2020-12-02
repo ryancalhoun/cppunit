@@ -4,6 +4,9 @@ default:
 stages:
 - prep
 - build
+- test
+- package
+- publish
 
 prepare builder image:
   stage: prep
@@ -28,3 +31,39 @@ build:
   - bundle install
   - rake cmake
   - rake build
+  artifacts:
+    paths:
+    - build/test/cppunit_test
+    - dist
+    expire_in: 1 hour
+
+test:
+  stage: test
+  dependencies:
+  - build
+  script:
+  - bundle install
+  - rake test
+
+package:
+  stage: package
+  dependencies:
+  - build
+  script:
+  - bundle install
+  - rake package
+  artifacts:
+    paths:
+    - dist/*.tgz
+    expire_in: 1 hour
+
+publish:
+  stage: publish
+  dependencies:
+  - package
+  script:
+  - curl
+    --header "JOB-TOKEN: $CI_JOB_TOKEN"
+    --upload-file dist/*.tgz ${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/generic/cppunit-$(./version.sh)/$(basename dist/*.tgz)
+
+
