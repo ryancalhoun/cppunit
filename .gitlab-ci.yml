@@ -62,7 +62,7 @@ publish:
   dependencies:
   - package
   script:
-  - echo curl --header "JOB-TOKEN: $CI_JOB_TOKEN" --upload-file dist/*.tgz ${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/generic/cppunit-$(./version.sh)/$(basename dist/*.tgz)
-  - curl --header "JOB-TOKEN: $CI_JOB_TOKEN" --upload-file dist/*.tgz ${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/generic/cppunit-$(./version.sh)/$(basename dist/*.tgz)
+  - 'echo curl --header "JOB-TOKEN: $CI_JOB_TOKEN" --upload-file dist/*.tgz ${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/generic/cppunit-$(./version.sh)/$(basename dist/*.tgz)'
+  - 'curl --header "JOB-TOKEN: $CI_JOB_TOKEN" --upload-file dist/*.tgz ${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/generic/cppunit-$(./version.sh)/$(basename dist/*.tgz)'
 
 
