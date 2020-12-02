@@ -4,6 +4,7 @@ configuration:
   - RelWithDebInfo
   - Debug
 install:
+  - gem install bundler
   - bundle install
 before_build:
   - rake cmake
